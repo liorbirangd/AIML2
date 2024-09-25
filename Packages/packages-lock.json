@@ -18,7 +18,7 @@
     },
     "com.unity.burst": {
       "version": "1.8.17",
-      "depth": 2,
+      "depth": 3,
       "source": "registry",
       "dependencies": {
         "com.unity.mathematics": "1.2.1",
@@ -63,21 +63,22 @@
     },
     "com.unity.mathematics": {
       "version": "1.2.6",
-      "depth": 3,
+      "depth": 4,
       "source": "registry",
       "dependencies": {},
       "url": "https://packages.unity.com"
     },
     "com.unity.ml-agents": {
-      "version": "file:C:/Users/lior1/OneDrive/Documents/GitHub/ml-agents/com.unity.ml-agents",
-      "depth": 0,
-      "source": "local",
+      "version": "3.0.0-exp.1",
+      "depth": 1,
+      "source": "registry",
       "dependencies": {
         "com.unity.sentis": "1.2.0-exp.2",
-        "com.unity.modules.imageconversion": "1.0.0",
+        "com.unity.modules.physics": "1.0.0",
         "com.unity.modules.jsonserialize": "1.0.0",
-        "com.unity.modules.physics": "1.0.0"
-      }
+        "com.unity.modules.imageconversion": "1.0.0"
+      },
+      "url": "https://packages.unity.com"
     },
     "com.unity.ml-agents.extensions": {
       "version": "file:C:/Users/lior1/OneDrive/Documents/GitHub/ml-agents/com.unity.ml-agents.extensions",
@@ -106,7 +107,7 @@
     },
     "com.unity.sentis": {
       "version": "1.2.0-exp.2",
-      "depth": 1,
+      "depth": 2,
       "source": "registry",
       "dependencies": {
         "com.unity.burst": "1.8.4",
