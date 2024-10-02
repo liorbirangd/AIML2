@@ -50,6 +50,7 @@ public class AgentSoccer : Agent
 
     public override void Initialize()
     {
+
         SoccerEnvController envController = GetComponentInParent<SoccerEnvController>();
         if (envController != null)
         {
