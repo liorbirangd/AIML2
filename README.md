@@ -1,67 +1,88 @@
 # AIML - BCS 2
 
-02.10.2024
+**Date:** 02.10.2024
 
-### PURPOSE OF PROJECT
+## Purpose of Project
+This project utilizes deep reinforcement learning algorithms within a real-time 3D soccer game environment to demonstrate the capabilities and implementation of AI strategies.
 
-This project aims to apply deep reinforcement learning algorithms in a real-time 3D soccer game environment. 
+## System Requirements
+- **Unity Version**: 2022.3.45f1
+
+## Environment Overview
+The simulation is set in a 3D soccer arena where two teams compete. The setup includes a field, two goals, a soccer ball, and four agents (two per team). The objective for each team is to score goals against the opposition.
+
+## Agents
+Each agent in this project is equipped with several scripts that enable training and execution:
+- **AgentSoccer**: This class extends the ML-Agents' `Agent` class, serving as the main connector between the agent and the training process. It manages reward settings and action executions.
+  - **Methods**:
+    - `Initialize()`: Invoked when the agent is first enabled to initialize necessary variables and establish links with other objects.
+    - `OnActionReceived(ActionBuffers actionBuffers)`: Triggered by model output, this method processes the received actions. The agent can perform three discrete actions: move forward, move sideways, and rotate. Each action accepts values: 0 (no action), 1 (move/rotate right or forward), or 2 (move/rotate left or backward).
+    - `OnEpisodeBegin()`: Called at the start of each training, reset the agent to prepare for a new episode.
+    - `Heuristic(in ActionBuffers actionsOut)`: Used for manual control by a human, bypassing the model when testing or demonstrating.
+    - `CollectObservations(VectorSensor sensor)`: Collects environmental data at every timestep. Although the method isn’t overridden in this project, it still gathers observations from the existing sensors on the agent and its children.
+    - **Rewards**: Agents must receive rewards for encouraged actions to facilitate effective training. The `AddReward(float)` method awards rewards when agents hit the ball or when their team scores a goal. Existential rewards or penalties are also assigned based on the agent's role as either a Goalie or Striker.
+- **BehaviorParameters**: Accompanies the Agent class to adjust parameters for training.
+  - **Variables**:
+    - Behavior Name: Must match the behavior name specified in the .yaml configuration file.
+    - Vector Observations: Sets the number of observations the agent collects, which is automatically calculated and should remain at 0 in this project since the `CollectObservations` method isn't overridden.
+    - Actions: Defines the quantity and type (discrete/continuous) of actions the agent can perform.
+    - Model: Connects the trained models post-training to the agent within Unity.
+    - TeamID: Essential for team training, ensuring each agent is associated with the correct team to qualify for team-specific rewards, such as scoring goals.
+
+## Sensors
+Agents gather data from the environment using built-in sensors, which are crucial for navigating and interacting within the game space:
+- **___RayPerceptionSensor**: Positioned on the agent, this component emits 11 forward-pointing rays to detect objects like walls, the ball, and other agents.
+- **___RayPerceptionSensorReverse**: Located on a child of the agent, this sensor sends out 3 backward-pointing rays, enhancing the agent's awareness of its surroundings by detecting objects from behind.
 
 
-### Environment Overview
-The environment of this project is composed of a 3D soccer game, the game has a field, goals, a ball, and 4 agents on 2 teams. 
-The 2 teams play against each other to get the ball in the opposing team's goal.
+## Python Environment Setup
+To prepare the training environment:
+1. Download and install Anaconda from [Anaconda Download](https://www.anaconda.com/download/success).
+2. Open Anaconda Prompt.
+3. Create a new environment:
+   ```bash
+   conda create -n mlagents python=3.8
+  Confirm with 'y' when prompted.
 
-### Agents
-Each agent object has a few scripts that let us run and train them:
-- **AgentSoccer** The AgentSoccer class extends the Agent class provided by the MLAgents packages.
-- **BehaviorParameters** 
-- **DecisionRequester** This component asks the agent's model to perform an action.
+4. Activate the new environment:
+   ```bash
+   conda activate mlagents
+5. Install dependencies:
+   ```bash
+   pip install mlagents==0.28.0 cattrs==1.5.0 protobuf==3.20.* torch==1.10.0+cpu torchvision==0.11.1+cpu torchaudio==0.10.0+cpu -f https://download.pytorch.org/whl/cpu/torch_stable.html numpy==1.19.5 six
+   python -c "import torch; print(torch.__version__)"
+6. Verify installation:
+   ```bash
+   mlagents-learn -h
 
-### Sensors
-The agents collect observations from the environment as input, these observations are collected via sensors.
-The sensors of the agent consist of raycasts originating from the agent object and reporting on hitting different objects such as the walls, the ball, and other agents.
-- **___RayPerceptionSensor** The first raycast object, a component on the agent object, has rays pointed forward with a total of 11 rays.
-- **___RayPerceptionSensorReverse** The second set of raycasts, a component on a child of the agent, has rays pointed backwards with a total of 3 rays.
+## How to Train the Agents
+1. Open Anaconda Prompt and activate the ML-Agents environment:
+   ```bash
+   conda activate mlagents
+2. Navigate to the directory containing the SoccerTwos.yaml configuration file:
+   ```bash
+   cd <path to folder>
+3. Start the training:
+   ```bash
+   mlagents-learn SoccerTwos.yaml --run-id=<training session name>
+Once prompted, start the Unity environment in the SoccerTwos scene.
 
-### Python Environment Setup
-In order to train the agents, we need to set up a Python environment with the mlagents libraries. To do that follow the following steps:
-- Download Anaconda Prompt from "https://www.anaconda.com/download/success"
-- Open Anaconda Prompt
-- Create a new  environment using the following command:
-  conda create -n mlagents python=3.8
-  Press y to accept when prompted by the CLI
-- Activate the environment
-  conda activate mlagents
-- Install all necessary libraries, run the following commands one by line:
-  pip install mlagents==0.28.0 cattrs==1.5.0
-  pip install protobuf==3.20.*
-  pip install torch==1.10.0+cpu torchvision==0.11.1+cpu torchaudio==0.10.0+cpu -f https://download.pytorch.org/whl/cpu/torch_stable.html
-  python -c "import torch; print(torch.__version__)"
-  pip install numpy==1.19.5
-  pip install six
-- Check that the installation works properly by running the command:
-  mlagents-learn -h
+### Viewing Results
+- Open a new Anaconda Prompt, activate the environment, and go to the training directory:
+  ```bash
+  tensorboard --logdir results
+- Access TensorBoard through the URL provided in the CLI.
 
-### How To Train The Agents
-After the Python environment is set up, we want to train the agents:
-- Open Anaconda Prompt
-- Activate the environment using:
-  conda activate mlagents
-- Go into the folder with the .yaml file, this file is in the config/poca folder under this project. Use the command:
-  cd \<path to folder\>
-- write the following command:
-  mlagents-learn SoccerTwos.yaml --run-id=\<name of training\>
-  the SoccersTwos.yaml file is a file with a parameters profile for the training process.
-- Wait until a message in the CLI says the training process is ready to start.
-- In Unity press play to start the game in the SoccerTwos scene.
-**Viewing the results**
-- In order to view the training process results, open a new Anaconda Prompt window, activate the environment and go to the same folder as the one opened for training.
-- Type the following command:
-tensorboard --logdir results
-- Open a web browser and go to the URL printed in the CLI
+## ML-Agents Library
+This project makes use of the ML-Agents toolkit, an open-source project from Unity Technologies aimed at enabling games and simulations to serve as environments for training intelligent agents. For more details and licensing information, visit the [ML-Agents GitHub repository](https://github.com/Unity-Technologies/ml-agents).
 
-### AUTHORS
+## Licensing
+This project is licensed under the Apache License, Version 2.0. You may obtain a copy of the license at: [Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0).
 
+### License Terms
+Under the terms of the Apache License, Version 2.0, you may not use this file except in compliance with the License. The full terms and conditions for use, reproduction, and distribution are included in the license available through the link provided above.
+
+## Authors
 - Rana Eltahir
 - Natalia Hadjisoteriou
 - Styliani Mikelli
@@ -70,7 +91,6 @@ tensorboard --logdir results
 - Floris Voogt
 - Lior Biran
 
-### Acknowledgements
+## Acknowledgements
+Special thanks to the Department of Advanced Computing Sciences at Maastricht University for their continuous support and guidance.
 
-We extend our gratitude to the Department of Advanced Computing Sciences at Maastricht University for their support and
-guidance throughout the development of this project.
