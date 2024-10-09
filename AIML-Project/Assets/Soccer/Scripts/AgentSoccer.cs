@@ -102,7 +102,8 @@ public class AgentSoccer : Agent
         if (position == Position.Goalie)
         {
             // Existential bonus for Goalies.
-            AddReward(m_Existential);
+            AddReward(m_Existential * 2.0f); //Aleksandar Stoychev: doubled goalkeeper's reward for staying
+                                             //in the game
         }
         else if (position == Position.Striker)
         {
@@ -161,7 +162,7 @@ public class AgentSoccer : Agent
         }
         if (c.gameObject.CompareTag("ball"))
         {
-            AddReward(.2f * m_BallTouch);
+            AddReward(.5f * m_BallTouch); //Aleksandar Stoychev: chnaged the ball touch reward from .2 to .f
             var dir = c.contacts[0].point - transform.position;
             dir = dir.normalized;
             c.gameObject.GetComponent<Rigidbody>().AddForce(dir * force);
@@ -216,4 +217,22 @@ public class AgentSoccer : Agent
             ForceMode.VelocityChange);
     }
 
+    /// <summary>
+    /// Aleksandar Stoychev
+    /// Adds a reward based on the agent's proximity to the ball.
+    /// The closer the agent is to the ball, the higher the reward.
+    /// </summary>
+    public void RewardForProximityToBall(GameObject ball)
+    {
+        // Calculate the distance between the agent and the ball.
+        float distanceToBall = Vector3.Distance(transform.position, ball.transform.position);
+
+        // Define the reward based on the inverse of the distance (closer = higher reward).
+        float reward = Mathf.Clamp(1f / distanceToBall, 0f, 1f);
+
+        // Add the reward to the agent.
+        AddReward(reward * 0.1f);
+    }
+    
 }
+
