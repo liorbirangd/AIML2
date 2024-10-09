@@ -33,7 +33,7 @@ public class AgentSoccer : Agent
     float m_BallTouch;
     public Position position;
 
-    const float k_Power = 2000f;
+    const float k_Power = 10000f;
     float m_Existential;
     float m_LateralSpeed;
     float m_ForwardSpeed;
@@ -53,11 +53,11 @@ public class AgentSoccer : Agent
         SoccerEnvController envController = GetComponentInParent<SoccerEnvController>();
         if (envController != null)
         {
-            m_Existential = 1f / envController.MaxEnvironmentSteps;
+            m_Existential = 100f / envController.MaxEnvironmentSteps;
         }
         else
         {
-            m_Existential = 1f / MaxStep;
+            m_Existential = 100f / MaxStep;
         }
 
         m_BehaviorParameters = gameObject.GetComponent<BehaviorParameters>();
@@ -85,12 +85,12 @@ public class AgentSoccer : Agent
         }
         else
         {
-            m_LateralSpeed = 0.3f;
-            m_ForwardSpeed = 1.0f;
+            m_LateralSpeed = 2f;
+            m_ForwardSpeed = 2f;
         }
         m_SoccerSettings = FindObjectOfType<SoccerSettings>();
         agentRb = GetComponent<Rigidbody>();
-        agentRb.maxAngularVelocity = 500;
+        agentRb.maxAngularVelocity = 1000;
 
         m_ResetParams = Academy.Instance.EnvironmentParameters;
     }
@@ -161,7 +161,7 @@ public class AgentSoccer : Agent
         }
         if (c.gameObject.CompareTag("ball"))
         {
-            AddReward(.2f * m_BallTouch);
+            AddReward(2f * m_BallTouch);
             var dir = c.contacts[0].point - transform.position;
             dir = dir.normalized;
             c.gameObject.GetComponent<Rigidbody>().AddForce(dir * force);
@@ -174,7 +174,7 @@ public class AgentSoccer : Agent
         var dirToGo = Vector3.zero;
         var rotateDir = Vector3.zero;
 
-        m_KickPower = 0f;
+        m_KickPower = 1f;
 
         var forwardAxis = act[0];
         var rightAxis = act[1];
@@ -184,7 +184,7 @@ public class AgentSoccer : Agent
         {
             case 1:
                 dirToGo = transform.forward * m_ForwardSpeed;
-                m_KickPower = 1f;
+                m_KickPower = 3f;
                 break;
             case 2:
                 dirToGo = transform.forward * -m_ForwardSpeed;
