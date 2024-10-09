@@ -9,6 +9,22 @@
     {
       "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Laura\\OneDrive\\Dokumente\\GitHub\\AIML2\\AIML-Project\\Assets\\Soccer\\Scripts\\SoccerBallController.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Soccer\\Scripts\\SoccerBallController.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Laura\\OneDrive\\Dokumente\\GitHub\\AIML2\\AIML-Project\\Assets\\Soccer\\Scripts\\SoccerEnvController.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Soccer\\Scripts\\SoccerEnvController.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Laura\\OneDrive\\Dokumente\\GitHub\\AIML2\\AIML-Project\\Assets\\3DBall\\Scripts\\Ball3DHardAgent.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:3DBall\\Scripts\\Ball3DHardAgent.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Laura\\OneDrive\\Dokumente\\GitHub\\AIML2\\AIML-Project\\Assets\\3DBall\\Scripts\\Ball3DAgent.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:3DBall\\Scripts\\Ball3DAgent.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Laura\\OneDrive\\Dokumente\\GitHub\\AIML2\\AIML-Project\\Assets\\Soccer\\Scripts\\SoccerSettings.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Soccer\\Scripts\\SoccerSettings.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -18,8 +34,34 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 1,
+          "SelectedChildIndex": 0,
           "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "AgentSoccer.cs",
+              "DocumentMoniker": "C:\\Users\\Laura\\OneDrive\\Dokumente\\GitHub\\AIML2\\AIML-Project\\Assets\\Soccer\\Scripts\\AgentSoccer.cs",
+              "RelativeDocumentMoniker": "Soccer\\Scripts\\AgentSoccer.cs",
+              "ToolTip": "C:\\Users\\Laura\\OneDrive\\Dokumente\\GitHub\\AIML2\\AIML-Project\\Assets\\Soccer\\Scripts\\AgentSoccer.cs",
+              "RelativeToolTip": "Soccer\\Scripts\\AgentSoccer.cs",
+              "ViewState": "AgIAABgAAAAAAAAAAAAAAAEAAAAVAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-10-09T08:48:29.558Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "SoccerEnvController.cs",
+              "DocumentMoniker": "C:\\Users\\Laura\\OneDrive\\Dokumente\\GitHub\\AIML2\\AIML-Project\\Assets\\Soccer\\Scripts\\SoccerEnvController.cs",
+              "RelativeDocumentMoniker": "Soccer\\Scripts\\SoccerEnvController.cs",
+              "ToolTip": "C:\\Users\\Laura\\OneDrive\\Dokumente\\GitHub\\AIML2\\AIML-Project\\Assets\\Soccer\\Scripts\\SoccerEnvController.cs",
+              "RelativeToolTip": "Soccer\\Scripts\\SoccerEnvController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAAhAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-10-09T08:32:11.626Z",
+              "EditorCaption": ""
+            },
             {
               "$type": "Document",
               "DocumentIndex": 1,
@@ -30,20 +72,46 @@
               "RelativeToolTip": "Soccer\\Scripts\\SoccerBallController.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-10-02T10:19:31.819Z",
+              "WhenOpened": "2024-10-09T08:22:31.732Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "AgentSoccer.cs",
-              "DocumentMoniker": "C:\\Users\\Laura\\OneDrive\\Dokumente\\GitHub\\AIML2\\AIML-Project\\Assets\\Soccer\\Scripts\\AgentSoccer.cs",
-              "RelativeDocumentMoniker": "Soccer\\Scripts\\AgentSoccer.cs",
-              "ToolTip": "C:\\Users\\Laura\\OneDrive\\Dokumente\\GitHub\\AIML2\\AIML-Project\\Assets\\Soccer\\Scripts\\AgentSoccer.cs",
-              "RelativeToolTip": "Soccer\\Scripts\\AgentSoccer.cs",
-              "ViewState": "AgIAAFQAAAAAAAAAAAAAAGcAAAAXAAAAAAAAAA==",
+              "DocumentIndex": 3,
+              "Title": "Ball3DHardAgent.cs",
+              "DocumentMoniker": "C:\\Users\\Laura\\OneDrive\\Dokumente\\GitHub\\AIML2\\AIML-Project\\Assets\\3DBall\\Scripts\\Ball3DHardAgent.cs",
+              "RelativeDocumentMoniker": "3DBall\\Scripts\\Ball3DHardAgent.cs",
+              "ToolTip": "C:\\Users\\Laura\\OneDrive\\Dokumente\\GitHub\\AIML2\\AIML-Project\\Assets\\3DBall\\Scripts\\Ball3DHardAgent.cs",
+              "RelativeToolTip": "3DBall\\Scripts\\Ball3DHardAgent.cs",
+              "ViewState": "AgIAADYAAAAAAAAAAAAAAEEAAAAJAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-10-02T10:12:32.864Z",
+              "WhenOpened": "2024-10-09T08:18:24.78Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "Ball3DAgent.cs",
+              "DocumentMoniker": "C:\\Users\\Laura\\OneDrive\\Dokumente\\GitHub\\AIML2\\AIML-Project\\Assets\\3DBall\\Scripts\\Ball3DAgent.cs",
+              "RelativeDocumentMoniker": "3DBall\\Scripts\\Ball3DAgent.cs",
+              "ToolTip": "C:\\Users\\Laura\\OneDrive\\Dokumente\\GitHub\\AIML2\\AIML-Project\\Assets\\3DBall\\Scripts\\Ball3DAgent.cs",
+              "RelativeToolTip": "3DBall\\Scripts\\Ball3DAgent.cs",
+              "ViewState": "AgIAAEUAAAAAAAAAAAAAAF8AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-10-09T08:18:05.097Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "SoccerSettings.cs",
+              "DocumentMoniker": "C:\\Users\\Laura\\OneDrive\\Dokumente\\GitHub\\AIML2\\AIML-Project\\Assets\\Soccer\\Scripts\\SoccerSettings.cs",
+              "RelativeDocumentMoniker": "Soccer\\Scripts\\SoccerSettings.cs",
+              "ToolTip": "C:\\Users\\Laura\\OneDrive\\Dokumente\\GitHub\\AIML2\\AIML-Project\\Assets\\Soccer\\Scripts\\SoccerSettings.cs",
+              "RelativeToolTip": "Soccer\\Scripts\\SoccerSettings.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-10-09T08:14:37.247Z",
               "EditorCaption": ""
             }
           ]

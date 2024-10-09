@@ -50,10 +50,13 @@ public class AgentSoccer : Agent
     EnvironmentParameters m_ResetParams;
 
     private SoccerEnvController envController;
+    private GameObject ball; // Add a reference to the ball
 
     public override void Initialize()
     {
+        ball = GameObject.FindWithTag("ball");
         envController = GetComponentInParent<SoccerEnvController>();
+
         if (envController != null)
         {
             m_Existential = 1f / envController.MaxEnvironmentSteps;
@@ -101,6 +104,19 @@ public class AgentSoccer : Agent
     public override void OnActionReceived(ActionBuffers actionBuffers)
 
     {
+        if (ball != null)
+        {
+            Vector3 directionToBall = (ball.transform.position - transform.position).normalized;
+            float angleToBall = Vector3.Angle(transform.forward, directionToBall);
+
+            // Reward agent if the angle is small (e.g., facing within 20 degrees of the ball)
+            if (angleToBall < 20f)
+            {
+                AddReward(0.1f); // Give a small reward for facing the ball
+                //Debug.Log("Reward for facing the ball"); // Log message
+
+            }
+        }
 
         if (position == Position.Goalie)
         {
@@ -199,7 +215,9 @@ public class AgentSoccer : Agent
                 dirToGo = transform.forward * -m_ForwardSpeed;
 
                 // add penalty for moving backwards
-                AddReward(-0.01f);
+                AddReward(-0.1f);
+                Debug.Log("Penalty applied for moving backward."); // Log message
+
 
                 break;
         }
@@ -218,9 +236,11 @@ public class AgentSoccer : Agent
         {
             case 1:
                 rotateDir = transform.up * -1f;
+                //AddReward(0.01f);
                 break;
             case 2:
                 rotateDir = transform.up * 1f;
+                //AddReward(0.01f);
                 break;
         }
 

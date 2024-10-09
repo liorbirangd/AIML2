@@ -1,11 +1,7 @@
 {
   "ExpandedNodes": [
     "",
-    "\\3DBall",
-    "\\3DBall\\Scripts",
-    "\\Soccer",
-    "\\Soccer\\Scripts"
+    "\\3DBall"
   ],
-  "SelectedNode": "\\Soccer\\Scripts\\AgentSoccer.cs",
   "PreviewInSolutionExplorer": false
 }
