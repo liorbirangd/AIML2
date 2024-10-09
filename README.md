@@ -1,6 +1,6 @@
 # AIML - BCS 2
 
-**Date:** 02.10.2024
+**Date:** 09.10.2024
 
 ## Purpose of Project
 This project utilizes deep reinforcement learning algorithms within a real-time 3D soccer game environment to demonstrate the capabilities and implementation of AI strategies.
