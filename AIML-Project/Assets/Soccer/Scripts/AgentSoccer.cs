@@ -19,6 +19,7 @@ public class AgentSoccer : Agent
     // * own teammate
     // * opposing player
 
+
     public enum Position
     {
         Striker,
@@ -48,9 +49,11 @@ public class AgentSoccer : Agent
 
     EnvironmentParameters m_ResetParams;
 
+    private SoccerEnvController envController;
+
     public override void Initialize()
     {
-        SoccerEnvController envController = GetComponentInParent<SoccerEnvController>();
+        envController = GetComponentInParent<SoccerEnvController>();
         if (envController != null)
         {
             m_Existential = 1f / envController.MaxEnvironmentSteps;
@@ -142,6 +145,12 @@ public class AgentSoccer : Agent
         {
             discreteActionsOut[1] = 2;
         }
+
+        //Reset scene on press of R key
+        if (Input.GetKeyDown(KeyCode.R) && envController != null) 
+        {
+            envController.ResetScene();
+        }
     }
     /// <summary>
     /// Used to provide a "kick" to the ball.
@@ -188,6 +197,10 @@ public class AgentSoccer : Agent
                 break;
             case 2:
                 dirToGo = transform.forward * -m_ForwardSpeed;
+
+                // add penalty for moving backwards
+                AddReward(-0.01f);
+
                 break;
         }
 
