@@ -34,6 +34,13 @@ Agents gather data from the environment using built-in sensors, which are crucia
 - **___RayPerceptionSensor**: Positioned on the agent, this component emits 11 forward-pointing rays to detect objects like walls, the ball, and other agents.
 - **___RayPerceptionSensorReverse**: Located on a child of the agent, this sensor sends out 3 backward-pointing rays, enhancing the agent's awareness of its surroundings by detecting objects from behind.
 
+## Download Unity Project
+1. Download the Unity Engine Hub from [UnityHub Download](https://unity.com/download).
+2. In the UnityHub go to the installation tab, and install the Unity version: 2022.3.45f1.
+3. Download GitHub Desktop (or use the terminal) from [GitHub Desktop Download](https://desktop.github.com/download/).
+4. Clone this repository to your computer.
+5. Open UnityHub, "click Add>Add Project From Disc" and search for the repository. Make sure to open the  "AIML-Project" folder.
+6. Inside the Unity Editor, the main scene is in the folder "Assets>Soccer>Scenes>SoccerTwos"
 
 ## Python Environment Setup
 To prepare the training environment:
