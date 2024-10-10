@@ -79,9 +79,6 @@ This project makes use of the ML-Agents toolkit, an open-source project from Uni
 ## Licensing
 This project is licensed under the Apache License, Version 2.0. You may obtain a copy of the license at: [Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0).
 
-### License Terms
-Under the terms of the Apache License, Version 2.0, you may not use this file except in compliance with the License. The full terms and conditions for use, reproduction, and distribution are included in the license available through the link provided above.
-
 ## Authors
 - Rana Eltahir
 - Natalia Hadjisoteriou
