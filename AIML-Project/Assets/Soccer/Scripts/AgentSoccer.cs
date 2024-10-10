@@ -38,7 +38,6 @@ public class AgentSoccer : Agent
     float m_LateralSpeed;
     float m_ForwardSpeed;
 
-
     [HideInInspector]
     public Rigidbody agentRb;
     SoccerSettings m_SoccerSettings;
@@ -96,9 +95,7 @@ public class AgentSoccer : Agent
     }
 
     public override void OnActionReceived(ActionBuffers actionBuffers)
-
     {
-
         if (position == Position.Goalie)
         {
             // Existential bonus for Goalies.
@@ -109,6 +106,13 @@ public class AgentSoccer : Agent
             // Existential penalty for Strikers
             AddReward(-m_Existential);
         }
+
+        // Penalty for standing still (encourage movement)
+        if (agentRb.velocity.magnitude < 0.1f)
+        {
+            AddReward(-0.01f);  // Small penalty for not moving
+        }
+
         MoveAgent(actionBuffers.DiscreteActions);
     }
 
@@ -143,10 +147,7 @@ public class AgentSoccer : Agent
             discreteActionsOut[1] = 2;
         }
     }
-    /// <summary>
-    /// Used to provide a "kick" to the ball.
-    /// </summary>
-   
+
     public override void OnEpisodeBegin()
     {
         m_BallTouch = m_ResetParams.GetWithDefault("ball_touch", 0);
@@ -161,13 +162,12 @@ public class AgentSoccer : Agent
         }
         if (c.gameObject.CompareTag("ball"))
         {
-            AddReward(.2f * m_BallTouch);
+            AddReward(.5f * m_BallTouch);  // Increased reward for touching the ball
             var dir = c.contacts[0].point - transform.position;
             dir = dir.normalized;
             c.gameObject.GetComponent<Rigidbody>().AddForce(dir * force);
         }
     }
-
 
     public void MoveAgent(ActionSegment<int> act)
     {
@@ -183,21 +183,21 @@ public class AgentSoccer : Agent
         switch (forwardAxis)
         {
             case 1:
-                dirToGo = transform.forward * m_ForwardSpeed;
+                dirToGo = transform.forward * (m_ForwardSpeed * 1.2f);  // Increase forward speed by 20%
                 m_KickPower = 1f;
                 break;
             case 2:
-                dirToGo = transform.forward * -m_ForwardSpeed;
+                dirToGo = transform.forward * (-m_ForwardSpeed * 1.1f);  // Slightly decrease backward speed
                 break;
         }
 
         switch (rightAxis)
         {
             case 1:
-                dirToGo = transform.right * m_LateralSpeed;
+                dirToGo = transform.right * (m_LateralSpeed * 1.1f);  // Increase lateral speed by 10%
                 break;
             case 2:
-                dirToGo = transform.right * -m_LateralSpeed;
+                dirToGo = transform.right * (-m_LateralSpeed * 1.1f);  // Increase lateral speed by 10%
                 break;
         }
 
@@ -212,8 +212,6 @@ public class AgentSoccer : Agent
         }
 
         transform.Rotate(rotateDir, Time.deltaTime * 100f);
-        agentRb.AddForce(dirToGo * m_SoccerSettings.agentRunSpeed,
-            ForceMode.VelocityChange);
+        agentRb.AddForce(dirToGo * m_SoccerSettings.agentRunSpeed, ForceMode.VelocityChange);
     }
-
 }
