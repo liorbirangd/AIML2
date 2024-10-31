@@ -1,5 +1,6 @@
 Changes Floris
 
 31-10-2024
-Started following a tutorial that would add vision and hearing sensors
-Added a link to the tutorial
+Removed back raycasts
+Created a new Sensors folder, Assets/Soccer/Scripts/Sensor
+Will be working on new sensors in this folder
