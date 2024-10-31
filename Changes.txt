@@ -1,31 +1,5 @@
-AIML2	Floris Voogt	Changes from basic version
-1.1
+Changes Floris
 
-Assets>Soccer>Prefabs>SoccerBall>Prefabs>SoccerFieldTwos>Soccer Ball;Inspector>Rigidbody
-
-Increased Mass from 3 to 10
-Increased drag from 1 to 3
-Increased angular drag from 1 to 3
-
-
-Assets>Soccer>Scripts>AgentSoccer.cs
-
-Increased k_power from 2000f to 10000f
-
-In Initialize() Function
-m_LateralSpeed increased from 0.3 to 2
-m_ForwardSpeed increased from 1 to 2
-Increased agentRb.maxAngularVelocity in from 500 to 1000
-Increased m_Existential in from 1 to 100
-
-In OnCollisionEnter() Function
-Increased the AddReward multiplier from 0.2 to 2
-
-In MoveAgent() FUnction
-Increased m_KickPower from 0 to 1
-Increased m_kickpower from 1 to 3
-
-
-Tried to add more balls to the field but if you do the new balls don't reset upon goal
-Tried to fix this and then none of the balls reset upon goal
-Got rid of them but reset function was still broken, had to reset all my changes
+31-10-2024
+Started following a tutorial that would add vision and hearing sensors
+Added a link to the tutorial
