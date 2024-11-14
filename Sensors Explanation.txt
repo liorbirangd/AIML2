@@ -1,0 +1,29 @@
+Explanation for the sensors
+
+Sensors are made following this tutorial: https://www.youtube.com/watch?v=ku1sBjizDeI
+
+Vision Sensor
+All things that can be seen have a detectable target script and everything with that script is in a list of detectable targets
+On each update, the vision sensor script goes trough every object in the list and sees if it is in the vision range
+
+Proximity Sensor
+Works the same as vision sensor but in a significantly shorter range and all around an agent
+
+Hearing Sensor
+Certain things create sound, which means they call the OnSoundEmitted function in the hearing manager script
+This function then alerts all the hearing sensors and for every sensor that the source is in range of, that sensor
+gets a message of the sound
+
+Awareness
+Different levels of awareness
+All senses are funneled into awareness system
+Vision has a curve so that awareness build up is slower around the peripherals than right in front
+Each time an agent sees, hears or senses a target, awareness goes up
+If the target can's be detected, Over time awerness will go down 
+If awareness becomes zero, can no longer detect target
+Awareness comes in different thresholds, when a treshholds changes a function is called
+
+Summary
+Followed to the tutorial to make 3 sensor, hearing vision and proximity
+These sensors are funneled into a more general awareness system
+Functions are called when the awareness threshold changes

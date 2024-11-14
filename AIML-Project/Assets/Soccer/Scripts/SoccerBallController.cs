@@ -23,5 +23,9 @@ public class SoccerBallController : MonoBehaviour
         {
             envController.GoalTouched(Team.Purple);
         }
+        if (col.gameObject.CompareTag("wall"))
+        {
+            HearingManager.Instance.OnSoundEmitted(gameObject, transform.position, EHeardSoundCategory.ECollision, 5f);
+        }
     }
 }

@@ -165,9 +165,11 @@ public class AgentSoccer : Agent
             var dir = c.contacts[0].point - transform.position;
             dir = dir.normalized;
             c.gameObject.GetComponent<Rigidbody>().AddForce(dir * force);
+            HearingManager.Instance.OnSoundEmitted(gameObject, transform.position, EHeardSoundCategory.EKick, 3f);
         }
     }
 
+    float count = 0f;
 
     public void MoveAgent(ActionSegment<int> act)
     {
@@ -214,6 +216,14 @@ public class AgentSoccer : Agent
         transform.Rotate(rotateDir, Time.deltaTime * 100f);
         agentRb.AddForce(dirToGo * m_SoccerSettings.agentRunSpeed,
             ForceMode.VelocityChange);
+
+        //Limited how often a 'sound' is made because it caused framerate drops when there are multiple fields
+        count++;
+        if (count >= 15)
+        {
+            HearingManager.Instance.OnSoundEmitted(gameObject, transform.position, EHeardSoundCategory.EFootstep, 2f);
+            count = 0;
+        }
     }
 
 }
