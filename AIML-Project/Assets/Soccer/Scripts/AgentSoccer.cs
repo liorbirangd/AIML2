@@ -117,6 +117,7 @@ public class AgentSoccer : Agent
             AddReward(-m_Existential);
         }
 
+
         MoveAgent(actionBuffers.DiscreteActions);
     }
 
