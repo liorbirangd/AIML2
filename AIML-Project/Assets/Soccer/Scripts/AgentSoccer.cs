@@ -1,10 +1,8 @@
-using System.Collections.Generic;
 using UnityEngine;
 using Unity.MLAgents;
 using Unity.MLAgents.Actuators;
 using Unity.MLAgents.Policies;
 using Unity.MLAgents.Sensors;
-using UnityEngine.InputSystem;
 
 public enum Team
 {
@@ -29,12 +27,9 @@ public class AgentSoccer : Agent
         Generic
     }
 
-    private HearingSensorController hearingSensor;
-
-    [HideInInspector] public Team team;
-
+    [HideInInspector]
+    public Team team;
     float m_KickPower;
-
     // The coefficient for the reward for colliding with a ball. Set using curriculum.
     float m_BallTouch;
     public Position position;
@@ -45,16 +40,17 @@ public class AgentSoccer : Agent
     float m_ForwardSpeed;
 
 
-    [HideInInspector] public Rigidbody agentRb;
+    [HideInInspector]
+    public Rigidbody agentRb;
     SoccerSettings m_SoccerSettings;
     BehaviorParameters m_BehaviorParameters;
     public Vector3 initialPos;
     public float rotSign;
-
     EnvironmentParameters m_ResetParams;
 
     public override void Initialize()
     {
+
         SoccerEnvController envController = GetComponentInParent<SoccerEnvController>();
         if (envController != null)
         {
@@ -78,7 +74,6 @@ public class AgentSoccer : Agent
             initialPos = new Vector3(transform.position.x + 5f, .5f, transform.position.z);
             rotSign = -1f;
         }
-
         if (position == Position.Goalie)
         {
             m_LateralSpeed = 1.0f;
@@ -94,11 +89,9 @@ public class AgentSoccer : Agent
             m_LateralSpeed = 0.3f;
             m_ForwardSpeed = 1.0f;
         }
-
         m_SoccerSettings = FindObjectOfType<SoccerSettings>();
         agentRb = GetComponent<Rigidbody>();
         agentRb.maxAngularVelocity = 500;
-        hearingSensor = GetComponentInChildren<HearingSensorController>();
 
         m_ResetParams = Academy.Instance.EnvironmentParameters;
     }
@@ -106,6 +99,7 @@ public class AgentSoccer : Agent
     public override void OnActionReceived(ActionBuffers actionBuffers)
 
     {
+
         if (position == Position.Goalie)
         {
             // Existential bonus for Goalies.
@@ -116,8 +110,6 @@ public class AgentSoccer : Agent
             // Existential penalty for Strikers
             AddReward(-m_Existential);
         }
-
-
         MoveAgent(actionBuffers.DiscreteActions);
     }
 
@@ -129,41 +121,37 @@ public class AgentSoccer : Agent
         {
             discreteActionsOut[0] = 1;
         }
-
         if (Input.GetKey(KeyCode.S))
         {
             discreteActionsOut[0] = 2;
         }
-
         //rotate
         if (Input.GetKey(KeyCode.A))
         {
             discreteActionsOut[2] = 1;
         }
-
         if (Input.GetKey(KeyCode.D))
         {
             discreteActionsOut[2] = 2;
         }
-
         //right
         if (Input.GetKey(KeyCode.E))
         {
             discreteActionsOut[1] = 1;
         }
-
         if (Input.GetKey(KeyCode.Q))
         {
             discreteActionsOut[1] = 2;
         }
     }
-
     /// <summary>
     /// Used to provide a "kick" to the ball.
     /// </summary>
+   
     public override void OnEpisodeBegin()
     {
         m_BallTouch = m_ResetParams.GetWithDefault("ball_touch", 0);
+   
     }
 
     void OnCollisionEnter(Collision c)
@@ -173,7 +161,6 @@ public class AgentSoccer : Agent
         {
             force = k_Power;
         }
-
         if (c.gameObject.CompareTag("ball"))
         {
             AddReward(.2f * m_BallTouch);
@@ -183,11 +170,6 @@ public class AgentSoccer : Agent
         }
     }
 
-    public override void CollectObservations(VectorSensor sensor)
-    {
-        if (hearingSensor != null)
-            hearingSensor.CollectObservations(sensor);
-    }
 
     public void MoveAgent(ActionSegment<int> act)
     {
@@ -235,4 +217,5 @@ public class AgentSoccer : Agent
         agentRb.AddForce(dirToGo * m_SoccerSettings.agentRunSpeed,
             ForceMode.VelocityChange);
     }
+
 }
