@@ -38,44 +38,31 @@ public class UnitController : MonoBehaviour
 
     public float CosVisionConeAngle { get; private set; } = 0f;
 
-    AwarenessSystem Awareness;
+    AwarenessSystem awareness;
 
     void Awake() 
     {
         CosVisionConeAngle = Mathf.Cos(VisionConeAngle * Mathf.Deg2Rad);
-        Awareness = GetComponent<AwarenessSystem>();
+        awareness = GetComponent<AwarenessSystem>();
     }
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
+    
     public void ReportCanSee(DetectableTarget seen)
     {
-        Awareness.ReportCanSee(seen);
+        awareness.ReportCanSee(seen);
         //Debug.Log("Can see " + seen.gameObject.name);
     }
 
     public void ReportCanHear(GameObject source, Vector3 location, EHeardSoundCategory category, float intensity)
     {
-        Awareness.ReportCanHear(source, location, category, intensity);
+        awareness.ReportCanHear(source, location, category, intensity);
         //Debug.Log("Heard sound " + category + " at " + location.ToString() + " with intensity " + intensity);
     }
 
     public void ReportInProximity(DetectableTarget target)
     {
-        Awareness.ReportInProximity(target);
+        awareness.ReportInProximity(target);
         //Debug.Log("Can sense " + target.gameObject.name);
     }
-
 
     public void OnSuspicious()
     {
