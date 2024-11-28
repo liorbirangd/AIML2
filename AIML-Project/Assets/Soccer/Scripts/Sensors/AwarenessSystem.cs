@@ -35,7 +35,8 @@ public class AwarenessSystem : MonoBehaviour
         List<DetectableTarget> initialTargets = detectableTargetManager.Listeners;
         foreach (DetectableTarget target in initialTargets)
         {
-            targets.Add(target.gameObject, new TrackedTarget(target, target.transform.position));
+            if (target.gameObject != gameObject)
+                targets.Add(target.gameObject, new TrackedTarget(target, target.transform.position));
         }
     }
 
@@ -51,7 +52,8 @@ public class AwarenessSystem : MonoBehaviour
     void UpdateAwareness(GameObject targetGO, DetectableTarget target, Vector3 position, float awareness,
         float minAwareness)
     {
-        targets[targetGO].UpdateAwareness(target, position, awareness, minAwareness);
+        if (targetGO != gameObject)
+            targets[targetGO].UpdateAwareness(target, position, awareness, minAwareness);
     }
 
     public void ReportCanSee(DetectableTarget seen)
@@ -97,9 +99,9 @@ public class AwarenessSystem : MonoBehaviour
     {
         switch (tag)
         {
-            case "Team1": return 0;
-            case "Team2": return 1;
-            case "Ball": return 2;
+            case "purpleAgent": return 0;
+            case "blueAgent": return 1;
+            case "ball": return 2;
             default: return -1;
         }
     }

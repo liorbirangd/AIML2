@@ -36,7 +36,7 @@ public class HearingSensorController : MonoBehaviour
             collisions.Remove(other.transform);
     }
 
-    public void CollectObservations(VectorSensor sensor)
+    public void AddObservations(VectorSensor sensor)
     {
         DetectCollisions();
         foreach (Observation observation in observations)
@@ -51,7 +51,6 @@ public class HearingSensorController : MonoBehaviour
     {
         observations = new Observation[4];
         int i = 0;
-        Debug.Log("Detecting collisions"+ collisions.Count);
         foreach (Transform t in collisions)
         {
             Rigidbody rb = t.GetComponent<Rigidbody>();

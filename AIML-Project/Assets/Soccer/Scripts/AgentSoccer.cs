@@ -104,7 +104,7 @@ public class AgentSoccer : Agent
         hearingSensor = GetComponentInChildren<HearingSensorController>();
 
         m_ResetParams = Academy.Instance.EnvironmentParameters;
-        awarenessSystem = GetComponentInParent<AwarenessSystem>();
+        awarenessSystem = GetComponentInChildren<AwarenessSystem>();
     }
 
     public override void OnActionReceived(ActionBuffers actionBuffers)
@@ -191,7 +191,9 @@ public class AgentSoccer : Agent
     public override void CollectObservations(VectorSensor sensor)
     {
         if (hearingSensor != null)
-            hearingSensor.CollectObservations(sensor);
+            hearingSensor.AddObservations(sensor);
+        if(awarenessSystem != null)
+            awarenessSystem.AddObservations(sensor);
     }
 
     public void MoveAgent(ActionSegment<int> act)
@@ -241,10 +243,10 @@ public class AgentSoccer : Agent
             ForceMode.VelocityChange);
 
 
-        MakeSound();
+        MovmentSound();
     }
 
-    private void MakeSound()
+    private void MovmentSound()
     {
         if (!awarenessSystem)
             return;

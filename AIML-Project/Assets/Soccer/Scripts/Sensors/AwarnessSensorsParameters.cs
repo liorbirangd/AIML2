@@ -7,7 +7,6 @@ using TMPro;
 using UnityEditor;
 #endif //UNITY_EDITOR
 
-[RequireComponent(typeof(AwarenessSystem))]
 public class AwarnessSensorsParameters : MonoBehaviour
 {
 
