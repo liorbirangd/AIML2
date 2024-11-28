@@ -2570,6 +2570,8 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   VisionMinimumAwareness: 1
+  detectableTargetManager: {fileID: 4416143542156906628}
+  hearingManager: {fileID: 3178994929163593869}
   VisionAwarenessBuildRate: 10
   HearingMinimumAwareness: 0
   HearingAwarenessBuildRate: 1
@@ -2984,6 +2986,8 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   VisionMinimumAwareness: 1
+  detectableTargetManager: {fileID: 4416143542156906628}
+  hearingManager: {fileID: 3178994929163593869}
   VisionAwarenessBuildRate: 10
   HearingMinimumAwareness: 0
   HearingAwarenessBuildRate: 1
@@ -3028,6 +3032,7 @@ Transform:
   - {fileID: 7843730402782877929}
   - {fileID: 5643284048999299831}
   - {fileID: 257899726}
+  - {fileID: 8629300324427488244}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &8122248192225965164
@@ -3464,6 +3469,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   area: {fileID: 1141134673700168}
   envController: {fileID: 0}
+  hearingManager: {fileID: 3178994929163593869}
   purpleGoalTag: purpleGoal
   blueGoalTag: blueGoal
 --- !u!54 &54100138833592438
@@ -4340,6 +4346,83 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!1 &2988921227931623364
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8268198653419084281}
+  - component: {fileID: 3178994929163593869}
+  m_Layer: 0
+  m_Name: HearingManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8268198653419084281
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2988921227931623364}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8629300324427488244}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3178994929163593869
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2988921227931623364}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b9fcbd49634d5bd4b96c3452617422ab, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!1 &3727375495373660661
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8629300324427488244}
+  m_Layer: 0
+  m_Name: Managers
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8629300324427488244
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3727375495373660661}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 8182266502207159328}
+  - {fileID: 8268198653419084281}
+  m_Father: {fileID: 4558743310993102}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &4599713170205044794
 GameObject:
   m_ObjectHideFlags: 0
@@ -4835,6 +4918,8 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   VisionMinimumAwareness: 1
+  detectableTargetManager: {fileID: 4416143542156906628}
+  hearingManager: {fileID: 3178994929163593869}
   VisionAwarenessBuildRate: 10
   HearingMinimumAwareness: 0
   HearingAwarenessBuildRate: 1
@@ -4930,6 +5015,50 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!1 &6513074318033998608
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8182266502207159328}
+  - component: {fileID: 4416143542156906628}
+  m_Layer: 0
+  m_Name: DetectableManagers
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8182266502207159328
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6513074318033998608}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8629300324427488244}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4416143542156906628
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6513074318033998608}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 79b73bf84f321be4d83c0eb2b8feb5e1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &7925489420550093475
 GameObject:
   m_ObjectHideFlags: 0
@@ -5503,6 +5632,8 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   VisionMinimumAwareness: 1
+  detectableTargetManager: {fileID: 4416143542156906628}
+  hearingManager: {fileID: 3178994929163593869}
   VisionAwarenessBuildRate: 10
   HearingMinimumAwareness: 0
   HearingAwarenessBuildRate: 1

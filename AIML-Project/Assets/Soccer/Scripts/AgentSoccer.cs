@@ -26,12 +26,14 @@ public class AgentSoccer : Agent
         Generic
     }
 
-    [HideInInspector]
-    public Team team;
+    [HideInInspector] public Team team;
+
     float m_KickPower;
+
     // The coefficient for the reward for colliding with a ball. Set using curriculum.
     float m_BallTouch;
     public Position position;
+    float soundTimer = 0f;
 
     const float k_Power = 2000f;
     float m_Existential;
@@ -39,12 +41,12 @@ public class AgentSoccer : Agent
     float m_ForwardSpeed;
 
 
-    [HideInInspector]
-    public Rigidbody agentRb;
+    [HideInInspector] public Rigidbody agentRb;
     SoccerSettings m_SoccerSettings;
     BehaviorParameters m_BehaviorParameters;
     public Vector3 initialPos;
     public float rotSign;
+    private AwarenessSystem awarenessSystem;
 
     EnvironmentParameters m_ResetParams;
 
@@ -73,6 +75,7 @@ public class AgentSoccer : Agent
             initialPos = new Vector3(transform.position.x + 5f, .5f, transform.position.z);
             rotSign = -1f;
         }
+
         if (position == Position.Goalie)
         {
             m_LateralSpeed = 1.0f;
@@ -88,17 +91,18 @@ public class AgentSoccer : Agent
             m_LateralSpeed = 0.3f;
             m_ForwardSpeed = 1.0f;
         }
+
         m_SoccerSettings = FindObjectOfType<SoccerSettings>();
         agentRb = GetComponent<Rigidbody>();
         agentRb.maxAngularVelocity = 500;
 
         m_ResetParams = Academy.Instance.EnvironmentParameters;
+        awarenessSystem = GetComponentInParent<AwarenessSystem>();
     }
 
     public override void OnActionReceived(ActionBuffers actionBuffers)
 
     {
-
         if (position == Position.Goalie)
         {
             // Existential bonus for Goalies.
@@ -109,6 +113,7 @@ public class AgentSoccer : Agent
             // Existential penalty for Strikers
             AddReward(-m_Existential);
         }
+
         MoveAgent(actionBuffers.DiscreteActions);
     }
 
@@ -120,33 +125,38 @@ public class AgentSoccer : Agent
         {
             discreteActionsOut[0] = 1;
         }
+
         if (Input.GetKey(KeyCode.S))
         {
             discreteActionsOut[0] = 2;
         }
+
         //rotate
         if (Input.GetKey(KeyCode.A))
         {
             discreteActionsOut[2] = 1;
         }
+
         if (Input.GetKey(KeyCode.D))
         {
             discreteActionsOut[2] = 2;
         }
+
         //right
         if (Input.GetKey(KeyCode.E))
         {
             discreteActionsOut[1] = 1;
         }
+
         if (Input.GetKey(KeyCode.Q))
         {
             discreteActionsOut[1] = 2;
         }
     }
+
     /// <summary>
     /// Used to provide a "kick" to the ball.
     /// </summary>
-   
     public override void OnEpisodeBegin()
     {
         m_BallTouch = m_ResetParams.GetWithDefault("ball_touch", 0);
@@ -159,17 +169,18 @@ public class AgentSoccer : Agent
         {
             force = k_Power;
         }
+
         if (c.gameObject.CompareTag("ball"))
         {
             AddReward(.2f * m_BallTouch);
             var dir = c.contacts[0].point - transform.position;
             dir = dir.normalized;
             c.gameObject.GetComponent<Rigidbody>().AddForce(dir * force);
-            HearingManager.Instance.OnSoundEmitted(gameObject, transform.position, EHeardSoundCategory.EKick, 3f);
+            awarenessSystem.hearingManager.OnSoundEmitted(gameObject, transform.position, EHeardSoundCategory.EKick,
+                3f);
         }
     }
 
-    float count = 0f;
 
     public void MoveAgent(ActionSegment<int> act)
     {
@@ -217,13 +228,21 @@ public class AgentSoccer : Agent
         agentRb.AddForce(dirToGo * m_SoccerSettings.agentRunSpeed,
             ForceMode.VelocityChange);
 
-        //Limited how often a 'sound' is made because it caused framerate drops when there are multiple fields
-        count++;
-        if (count >= 15)
-        {
-            HearingManager.Instance.OnSoundEmitted(gameObject, transform.position, EHeardSoundCategory.EFootstep, 2f);
-            count = 0;
-        }
+
+        MakeSound();
     }
 
+    private void MakeSound()
+    {
+        if (!awarenessSystem)
+            return;
+        //Limited how often a 'sound' is made because it caused framerate drops when there are multiple fields
+        soundTimer++;
+        if (soundTimer >= 15)
+        {
+            awarenessSystem.hearingManager.OnSoundEmitted(gameObject, transform.position, EHeardSoundCategory.EFootstep,
+                2f);
+            soundTimer = 0;
+        }
+    }
 }

@@ -1,15 +1,19 @@
-using MLAgentsExamples;
-using System.Collections;
+using System;
 using System.Collections.Generic;
+using Unity.MLAgents.Sensors;
 using UnityEngine;
 
-[RequireComponent(typeof(UnitController))]
+[RequireComponent(typeof(AwarnessSensorsParameters))]
 public class AwarenessSystem : MonoBehaviour
 {
     [SerializeField] AnimationCurve VisionSensitivity;
     [SerializeField] float VisionMinimumAwareness = 1f;
-    [SerializeField] float VisionAwarenessBuildRate = 10f; //How fast an agent becomes aware if something is right in front of it
-                                                           //If 10, reacts in 1/10 of a second
+    [SerializeField] public DetectableTargetManager detectableTargetManager;
+    [SerializeField] public HearingManager hearingManager;
+
+    [SerializeField]
+    float VisionAwarenessBuildRate = 10f; //How fast an agent becomes aware if something is right in front of it
+    //If 10, reacts in 1/10 of a second
 
     [SerializeField] float HearingMinimumAwareness = 0f;
     [SerializeField] float HearingAwarenessBuildRate = 5f;
@@ -20,59 +24,34 @@ public class AwarenessSystem : MonoBehaviour
     [SerializeField] float AwarenessDecayDelay = 0.1f;
     [SerializeField] float AwarenessDecayRate = 0.1f;
 
-    Dictionary<GameObject, TrackedTarget> Targets = new Dictionary<GameObject, TrackedTarget>();
+    Dictionary<GameObject, TrackedTarget> targets = new Dictionary<GameObject, TrackedTarget>();
 
-    UnitController Unit;
+    AwarnessSensorsParameters Unit;
 
     // Start is called before the first frame update
     void Start()
     {
-        Unit = GetComponent<UnitController>();
+        Unit = GetComponent<AwarnessSensorsParameters>();
+        List<DetectableTarget> initialTargets = detectableTargetManager.Listeners;
+        foreach (DetectableTarget target in initialTargets)
+        {
+            targets.Add(target.gameObject, new TrackedTarget(target, target.transform.position));
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
-        List<GameObject> toCleanUp = new List<GameObject>();
-        foreach(var targetGO in Targets.Keys)
+        foreach (var targetGO in targets.Keys)
         {
-            if (Targets[targetGO].DecayAwareness(AwarenessDecayDelay, AwarenessDecayRate * Time.deltaTime))
-            {
-                if (Targets[targetGO].Awareness <= 0f)
-                {
-                    Unit.OnLostSuspicion();
-                    toCleanUp.Add(targetGO);
-                }
-                else 
-                {
-                    if (Targets[targetGO].Awareness >= 1f)
-                        Unit.OnLostFullDetection(targetGO);
-                    else Unit.OnLostDetection();
-                }
-            }
+            targets[targetGO].DecayAwareness(AwarenessDecayDelay, AwarenessDecayRate * Time.deltaTime);
         }
-
-        //Clean up targets that are no longer detected
-        foreach (var target in toCleanUp)        
-            Targets.Remove(target);        
     }
 
-    void UpdateAwareness(GameObject targetGO, DetectableTarget target, Vector3 position, float awareness, float minAwareness)
+    void UpdateAwareness(GameObject targetGO, DetectableTarget target, Vector3 position, float awareness,
+        float minAwareness)
     {
-        //Not in targets
-        if (!Targets.ContainsKey(targetGO))
-            Targets[targetGO] = new TrackedTarget();
-
-        //Update target awareness
-        if (Targets[targetGO].UpdateAwareness(target, position, awareness, minAwareness))
-        {
-            if (Targets[targetGO].Awareness >= 2f)
-                Unit.OnFullyDetected(targetGO);
-            else if (Targets[targetGO].Awareness >= 1f) 
-                Unit.OnDetected(targetGO);
-            else 
-                Unit.OnSuspicious();
-        }
+        targets[targetGO].UpdateAwareness(target, position, awareness, minAwareness);
     }
 
     public void ReportCanSee(DetectableTarget seen)
@@ -101,5 +80,27 @@ public class AwarenessSystem : MonoBehaviour
         var awareness = ProximityAwarenessBuildRate * Time.deltaTime;
 
         UpdateAwareness(target.gameObject, target, target.transform.position, awareness, ProximityMinimumAwareness);
+    }
+
+    public void AddObservations(VectorSensor sensor)
+    {
+        foreach (var target in targets.Keys)
+        {
+            TrackedTarget trackedTarget = targets[target];
+            sensor.AddObservation(GetTagValue(target.tag));
+            sensor.AddObservation(trackedTarget.RawPosition);
+            sensor.AddObservation(trackedTarget.awareness);
+        }
+    }
+
+    private static int GetTagValue(String tag)
+    {
+        switch (tag)
+        {
+            case "Team1": return 0;
+            case "Team2": return 1;
+            case "Ball": return 2;
+            default: return -1;
+        }
     }
 }

@@ -11,21 +11,8 @@ public enum EHeardSoundCategory
 
 public class HearingManager : MonoBehaviour
 {
-    public static HearingManager Instance { get; private set; } = null;
 
     public List<HearingSensor> AllSensors { get; private set; } = new List<HearingSensor>();
-
-    void Awake()
-    {
-        if (Instance != null)
-        {
-            Debug.LogError("Multiple DetectableTargetManager found. Destroying: " + gameObject.name);
-            Destroy(gameObject);
-            return;
-        }
-
-        Instance = this;
-    }
     
     public void Register(HearingSensor sensor)
     {

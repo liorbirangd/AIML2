@@ -8,7 +8,7 @@ using UnityEditor;
 #endif //UNITY_EDITOR
 
 [RequireComponent(typeof(AwarenessSystem))]
-public class UnitController : MonoBehaviour
+public class AwarnessSensorsParameters : MonoBehaviour
 {
 
     [SerializeField] TextMeshProUGUI FeedbackDisplay;
@@ -45,69 +45,16 @@ public class UnitController : MonoBehaviour
         CosVisionConeAngle = Mathf.Cos(VisionConeAngle * Mathf.Deg2Rad);
         awareness = GetComponent<AwarenessSystem>();
     }
-    
-    public void ReportCanSee(DetectableTarget seen)
-    {
-        awareness.ReportCanSee(seen);
-        //Debug.Log("Can see " + seen.gameObject.name);
-    }
 
-    public void ReportCanHear(GameObject source, Vector3 location, EHeardSoundCategory category, float intensity)
-    {
-        awareness.ReportCanHear(source, location, category, intensity);
-        //Debug.Log("Heard sound " + category + " at " + location.ToString() + " with intensity " + intensity);
-    }
-
-    public void ReportInProximity(DetectableTarget target)
-    {
-        awareness.ReportInProximity(target);
-        //Debug.Log("Can sense " + target.gameObject.name);
-    }
-
-    public void OnSuspicious()
-    {
-        Debug.Log("Gained Suspicion");
-        //What to do when it knows somethings is close but does not know where it is; Awareness increased to 0-1
-    }
-
-    public void OnDetected(GameObject target)
-    {
-        Debug.Log("Detected Target");
-        //What to do when a target is seen; Awareness increased to 1-2
-    }
-
-    public void OnFullyDetected(GameObject target)
-    {
-        Debug.Log("Fully Detected");
-        //Awareness goes above 2
-    }
-
-    public void OnLostFullDetection(GameObject target)
-    {
-        Debug.Log("Lost Full Detection");
-        //What to do when losing sight of a target; Awareness decreased to 1-2
-    }
-
-    public void OnLostDetection()
-    {
-        Debug.Log("Lost Detection");
-        //What to do when completely losing track of a target; Awareness decreased to 0-1
-    }
-
-    public void OnLostSuspicion()
-    {
-        Debug.Log("Fully lost target");
-        //Target is removed from tracked target list; Awareness decreased to 0
-    }
 }
 
 #if UNITY_EDITOR
-[CustomEditor(typeof(UnitController))]
+[CustomEditor(typeof(AwarnessSensorsParameters))]
 public class EnemyAIEditor : Editor
 {
     public void OnSceneGUI()
     {
-        var ai = target as UnitController;
+        var ai = target as AwarnessSensorsParameters;
 
         // draw the detectopm range
         Handles.color = ai.ProximityDetectionColour;

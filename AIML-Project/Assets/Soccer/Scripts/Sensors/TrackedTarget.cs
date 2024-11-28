@@ -5,48 +5,46 @@ class TrackedTarget
     public DetectableTarget Detectable;
     public Vector3 RawPosition;
 
-    public float LastSensedTime = -1f;
+    public float lastSensedTime;
 
-    public float Awareness; //0 = not aware (culled)
+    public float awareness; //0 = not aware (culled)
+
+    public TrackedTarget(DetectableTarget detectable, Vector3 rawPosition)
+    {
+        Detectable = detectable;
+        RawPosition = rawPosition;
+        lastSensedTime = -1f;
+        awareness = 0;
+    }
 
     //0-1 = rough idea (no location)
     //1-2 = liekly target (location)
     //2 = fully detected
     public bool UpdateAwareness(DetectableTarget target, Vector3 position, float awareness, float minAwareness)
     {
-        var oldAwareness = Awareness;
+        var oldAwareness = this.awareness;
 
         if (target != null)
             Detectable = target;
         RawPosition = position;
-        LastSensedTime = Time.time;
-        Awareness = Mathf.Clamp(Mathf.Max(Awareness, minAwareness) + awareness, 0f, 2f);
+        lastSensedTime = Time.time;
+        this.awareness = Mathf.Clamp(Mathf.Max(this.awareness, minAwareness) + awareness, 0f, 2f);
 
-        if (oldAwareness < 2f && Awareness >= 2f)
+        if (oldAwareness < 2f && this.awareness >= 2f)
             return true;
-        if (oldAwareness < 1f && Awareness >= 1f)
+        if (oldAwareness < 1f && this.awareness >= 1f)
             return true;
-        if (oldAwareness <= 0f && Awareness >= 0f)
+        if (oldAwareness <= 0f && this.awareness >= 0f)
             return true;
 
         return false;
     }
 
-    public bool DecayAwareness(float decayTime, float amount)
+    public void DecayAwareness(float decayTime, float amount)
     {
         //Detected to recently
-        if ((Time.time - LastSensedTime) < decayTime)
-            return false;
-
-        var oldAwareness = Awareness;
-
-        Awareness -= amount;
-
-        if (oldAwareness >= 2f && Awareness < 2f)
-            return true;
-        if (oldAwareness >= 1f && Awareness < 1f)
-            return true;
-
-        return Awareness <= 0f;
+        if ((Time.time - lastSensedTime) < decayTime)
+            return;
+        awareness -= amount;
     }
 }

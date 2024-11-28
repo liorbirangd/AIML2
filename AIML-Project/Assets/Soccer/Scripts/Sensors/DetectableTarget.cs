@@ -4,20 +4,16 @@ using UnityEngine;
 
 public class DetectableTarget : MonoBehaviour
 {
-
+    AwarenessSystem awarenessSystem;
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
-        DetectableTargetManager.Instance.Register(this);
+        awarenessSystem = GetComponent<AwarenessSystem>();
+        awarenessSystem.detectableTargetManager.Register(this);
     }
 
-    // Update is called once per frame
-    void Update()
+    void OnDestroy()
     {
-        
-    }
-
-    void OnDestroy() {
-        if (DetectableTargetManager.Instance != null) DetectableTargetManager.Instance.Deregister(this);
+        if (awarenessSystem.detectableTargetManager != null) awarenessSystem.detectableTargetManager.Deregister(this);
     }
 }
