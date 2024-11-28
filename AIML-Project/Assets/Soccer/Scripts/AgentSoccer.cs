@@ -29,8 +29,9 @@ public class AgentSoccer : Agent
         Generic
     }
 
-    private HearingSensorController hearingSensor;
 
+    private HearingSensorController hearingSensor;
+    
     [HideInInspector] public Team team;
 
     float m_KickPower;
@@ -38,6 +39,7 @@ public class AgentSoccer : Agent
     // The coefficient for the reward for colliding with a ball. Set using curriculum.
     float m_BallTouch;
     public Position position;
+    float soundTimer = 0f;
 
     const float k_Power = 2000f;
     float m_Existential;
@@ -50,6 +52,7 @@ public class AgentSoccer : Agent
     BehaviorParameters m_BehaviorParameters;
     public Vector3 initialPos;
     public float rotSign;
+    private AwarenessSystem awarenessSystem;
 
     EnvironmentParameters m_ResetParams;
 
@@ -101,6 +104,7 @@ public class AgentSoccer : Agent
         hearingSensor = GetComponentInChildren<HearingSensorController>();
 
         m_ResetParams = Academy.Instance.EnvironmentParameters;
+        awarenessSystem = GetComponentInParent<AwarenessSystem>();
     }
 
     public override void OnActionReceived(ActionBuffers actionBuffers)
@@ -116,7 +120,6 @@ public class AgentSoccer : Agent
             // Existential penalty for Strikers
             AddReward(-m_Existential);
         }
-
 
         MoveAgent(actionBuffers.DiscreteActions);
     }
@@ -180,6 +183,8 @@ public class AgentSoccer : Agent
             var dir = c.contacts[0].point - transform.position;
             dir = dir.normalized;
             c.gameObject.GetComponent<Rigidbody>().AddForce(dir * force);
+            awarenessSystem.hearingManager.OnSoundEmitted(gameObject, transform.position, EHeardSoundCategory.EKick,
+                3f);
         }
     }
 
@@ -234,5 +239,22 @@ public class AgentSoccer : Agent
         transform.Rotate(rotateDir, Time.deltaTime * 100f);
         agentRb.AddForce(dirToGo * m_SoccerSettings.agentRunSpeed,
             ForceMode.VelocityChange);
+
+
+        MakeSound();
+    }
+
+    private void MakeSound()
+    {
+        if (!awarenessSystem)
+            return;
+        //Limited how often a 'sound' is made because it caused framerate drops when there are multiple fields
+        soundTimer++;
+        if (soundTimer >= 15)
+        {
+            awarenessSystem.hearingManager.OnSoundEmitted(gameObject, transform.position, EHeardSoundCategory.EFootstep,
+                2f);
+            soundTimer = 0;
+        }
     }
 }
