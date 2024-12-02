@@ -21,7 +21,8 @@ public class HearingSensorController : MonoBehaviour
     
     private void OnTriggerStay(Collider other)
     {
-        
+        if(!(other.tag=="ball"|| other.tag=="blueAgent"|| other.tag=="purpleAgent"))
+            return;
         if (other.transform == agentTransform)
             return;
         if (!collisions.Contains(other.transform))
@@ -30,6 +31,8 @@ public class HearingSensorController : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
+        if(!(other.tag=="ball"|| other.tag=="blueAgent"|| other.tag=="purpleAgent"))
+            return;
         if (other.transform == agentTransform)
             return;
         if (collisions.Contains(other.transform))
