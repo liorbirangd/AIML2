@@ -56,6 +56,9 @@ public class AgentSoccer : Agent
 
     EnvironmentParameters m_ResetParams;
 
+    private int positionalRewardStepCounter = 0; // Step counter for positional rewards
+    private const int positionalRewardStepInterval = 50; // Execute every 50 steps
+
     public override void Initialize()
     {
         SoccerEnvController envController = GetComponentInParent<SoccerEnvController>();
@@ -84,18 +87,18 @@ public class AgentSoccer : Agent
 
         if (position == Position.Goalie)
         {
-            m_LateralSpeed = 1.0f;
-            m_ForwardSpeed = 1.0f;
+            m_LateralSpeed = 0.5f;
+            m_ForwardSpeed = 0.5f;
         }
         else if (position == Position.Striker)
         {
             m_LateralSpeed = 0.3f;
-            m_ForwardSpeed = 1.3f;
+            m_ForwardSpeed = 0.6f;
         }
         else
         {
-            m_LateralSpeed = 0.3f;
-            m_ForwardSpeed = 1.0f;
+            m_LateralSpeed = 0.2f;
+            m_ForwardSpeed = 0.5f;
         }
 
         m_SoccerSettings = FindObjectOfType<SoccerSettings>();
@@ -108,12 +111,19 @@ public class AgentSoccer : Agent
     }
 
     public override void OnActionReceived(ActionBuffers actionBuffers)
-
     {
         if (position == Position.Goalie)
         {
             // Existential bonus for Goalies.
             AddReward(m_Existential);
+
+            // Execute the BallBasedPositionalReward only at specific intervals
+            positionalRewardStepCounter++;
+            if (positionalRewardStepCounter >= positionalRewardStepInterval)
+            {
+                BallBasedPositionalReward();
+                positionalRewardStepCounter = 0; // Reset counter
+            }
         }
         else if (position == Position.Striker)
         {
@@ -122,6 +132,38 @@ public class AgentSoccer : Agent
         }
 
         MoveAgent(actionBuffers.DiscreteActions);
+    }
+
+
+    private void BallBasedPositionalReward()
+    {
+        // Ball and goal references
+        var ball = GameObject.FindWithTag("ball");
+        if (ball == null) return;
+
+        // Define the position of the goal
+        Vector3 ownGoalPosition = team == Team.Blue
+            ? new Vector3(-1650, -25, -1.525f) // Blue goal
+            : new Vector3(1650, -25, -1.525f); // Purple goal
+
+        // Get the ball's position
+        Vector3 ballPosition = GameObject.FindWithTag("ball").transform.position;
+
+        // Calculate distances
+        float distanceGoalieToGoal = Vector3.Distance(transform.position, ownGoalPosition);
+        float distanceBallToGoal = Vector3.Distance(ballPosition, ownGoalPosition);
+
+        // Reward the goalie for being closer to the goal than the ball
+        if (distanceGoalieToGoal < distanceBallToGoal)
+        {
+            AddReward(0.1f); // Reward for being closer
+            DebugFileLogger.Log($"Goalie rewarded for being closer to the goal than the ball. Distance: {distanceGoalieToGoal} < {distanceBallToGoal}");
+        }
+        else
+        {
+            AddReward(-0.1f); // Penalty for being farther away
+            DebugFileLogger.Log($"Goalie penalized for being farther from the goal than the ball. Distance: {distanceGoalieToGoal} >= {distanceBallToGoal}");
+        }
     }
 
     public override void Heuristic(in ActionBuffers actionsOut)
@@ -180,13 +222,60 @@ public class AgentSoccer : Agent
         if (c.gameObject.CompareTag("ball"))
         {
             AddReward(.2f * m_BallTouch);
-            var dir = c.contacts[0].point - transform.position;
-            dir = dir.normalized;
-            c.gameObject.GetComponent<Rigidbody>().AddForce(dir * force);
-            awarenessSystem.hearingManager.OnSoundEmitted(gameObject, transform.position, EHeardSoundCategory.EKick,
-                3f);
+            DebugFileLogger.Log("Agent Touch Reward.");
+
+            // Apply force to the ball
+            var ballRb = c.gameObject.GetComponent<Rigidbody>();
+            var dirToBall = c.contacts[0].point - transform.position; // Direction to the contact point
+            dirToBall = dirToBall.normalized;
+            ballRb.AddForce(dirToBall * force); // Apply force
+
+            // Define goal centers
+            Vector3 opponentGoalCenter = team == Team.Blue
+                ? new Vector3(1650, -25, -1.525f) // Purple goal
+                : new Vector3(-1650, -25, -1.525f); // Blue goal
+
+            Vector3 ownGoalCenter = team == Team.Blue
+                ? new Vector3(-1650, -25, -1.525f) // Blue goal
+                : new Vector3(1650, -25, -1.525f); // Purple goal
+
+            // Compute directions to goals
+            Vector3 ballToOpponentGoal = opponentGoalCenter - c.contacts[0].point; // Vector to opponent's goal
+            ballToOpponentGoal = ballToOpponentGoal.normalized;
+
+            Vector3 ballToOwnGoal = ownGoalCenter - c.contacts[0].point; // Vector to own goal
+            ballToOwnGoal = ballToOwnGoal.normalized;
+
+            // Check ball's velocity alignment
+            Vector3 ballVelocity = ballRb.velocity.normalized;
+            float alignmentWithOpponentGoal = Vector3.Dot(ballToOpponentGoal, ballVelocity);
+            float alignmentWithOwnGoal = Vector3.Dot(ballToOwnGoal, ballVelocity);
+
+            DebugFileLogger.Log($"Alignment with opponent goal direction: {alignmentWithOpponentGoal}");
+            DebugFileLogger.Log($"Alignment with own goal direction: {alignmentWithOwnGoal}");
+
+            // Reward for kicking toward opponent's goal
+            if (alignmentWithOpponentGoal > 0.9f) // Threshold for alignment
+            {
+                AddReward(0.5f); // Reward for kicking toward opponent's goal
+                DebugFileLogger.Log("Reward for kicking toward opponent's goal area.");
+            }
+            // Penalty for kicking toward own goal
+            else if (alignmentWithOwnGoal > 0.9f) // Threshold for alignment
+            {
+                AddReward(-0.5f); // Penalty for kicking toward own goal
+                DebugFileLogger.Log("Penalty for kicking toward own goal");
+            }
+            else
+            {
+                DebugFileLogger.Log("No penalty or reward as kick direction is neutral.");
+            }
+
+            // Emit sound event
+            awarenessSystem.hearingManager.OnSoundEmitted(gameObject, transform.position, EHeardSoundCategory.EKick, 3f);
         }
     }
+
 
     public override void CollectObservations(VectorSensor sensor)
     {
@@ -238,7 +327,7 @@ public class AgentSoccer : Agent
                 break;
         }
 
-        transform.Rotate(rotateDir, Time.deltaTime * 100f);
+        transform.Rotate(rotateDir, Time.deltaTime * 50f);
         agentRb.AddForce(dirToGo * m_SoccerSettings.agentRunSpeed,
             ForceMode.VelocityChange);
 

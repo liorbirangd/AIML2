@@ -1,0 +1,49 @@
+{
+    "name": "root",
+    "metadata": {
+        "timer_format_version": "0.1.0",
+        "start_time_seconds": "1733084851",
+        "python_version": "3.8.19 (default, Mar 20 2024, 19:55:45) [MSC v.1916 64 bit (AMD64)]",
+        "command_line_arguments": "C:\\anaconda3\\envs\\mlagents\\Scripts\\mlagents-learn config/poca/SoccerTwos.yaml --run-id=TestRunScoreAndBallDirection --resume",
+        "mlagents_version": "0.28.0",
+        "mlagents_envs_version": "0.28.0",
+        "communication_protocol_version": "1.5.0",
+        "pytorch_version": "1.10.0+cpu",
+        "numpy_version": "1.19.5",
+        "end_time_seconds": "1733084863"
+    },
+    "total": 11.4059959,
+    "count": 1,
+    "self": 0.028020000000001488,
+    "children": {
+        "run_training.setup": {
+            "total": 0.13618149999999996,
+            "count": 1,
+            "self": 0.13618149999999996
+        },
+        "TrainerController.start_learning": {
+            "total": 11.2417944,
+            "count": 1,
+            "self": 0.00015639999999983445,
+            "children": {
+                "TrainerController._reset_env": {
+                    "total": 10.6726996,
+                    "count": 1,
+                    "self": 10.6726996
+                },
+                "TrainerController._save_models": {
+                    "total": 0.5689384000000004,
+                    "count": 1,
+                    "self": 0.037364200000000736,
+                    "children": {
+                        "RLTrainer._checkpoint": {
+                            "total": 0.5315741999999997,
+                            "count": 1,
+                            "self": 0.5315741999999997
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
