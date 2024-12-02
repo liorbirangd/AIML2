@@ -147,22 +147,32 @@ public class AgentSoccer : Agent
             : new Vector3(1650, -25, -1.525f); // Purple goal
 
         // Get the ball's position
-        Vector3 ballPosition = GameObject.FindWithTag("ball").transform.position;
+        Vector3 ballPosition = ball.transform.position;
 
-        // Calculate distances
-        float distanceGoalieToGoal = Vector3.Distance(transform.position, ownGoalPosition);
+
+        // Define a defensive zone threshold (distance from the goal)
+        float defensiveZoneRadius = 30.0f; // Adjust based on your field size
+        // Calculate distance from ball to the goal
         float distanceBallToGoal = Vector3.Distance(ballPosition, ownGoalPosition);
-
-        // Reward the goalie for being closer to the goal than the ball
-        if (distanceGoalieToGoal < distanceBallToGoal)
+        // Only reward if the ball is within the defensive zone
+        if (distanceBallToGoal <= defensiveZoneRadius)
         {
-            AddReward(0.1f); // Reward for being closer
-            DebugFileLogger.Log($"Goalie rewarded for being closer to the goal than the ball. Distance: {distanceGoalieToGoal} < {distanceBallToGoal}");
+            float distanceGoalieToGoal = Vector3.Distance(transform.position, ownGoalPosition);
+
+            // Reward the goalie for being closer to the goal than the ball
+            if (distanceGoalieToGoal < distanceBallToGoal)
+            {
+                AddReward(0.1f); // Reward for being closer
+                DebugFileLogger.Log($"Goalie rewarded for being closer to the goal than the ball. Distance: {distanceGoalieToGoal} < {distanceBallToGoal}");
+            }
+            else
+            {
+                DebugFileLogger.Log("No reward. Goalie is farther from the goal than the ball but no penalty applied.");
+            }
         }
         else
         {
-            AddReward(-0.1f); // Penalty for being farther away
-            DebugFileLogger.Log($"Goalie penalized for being farther from the goal than the ball. Distance: {distanceGoalieToGoal} >= {distanceBallToGoal}");
+            DebugFileLogger.Log("No positional reward. Ball is outside the defensive zone.");
         }
     }
 

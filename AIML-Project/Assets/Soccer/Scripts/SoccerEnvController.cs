@@ -104,7 +104,7 @@ public class SoccerEnvController : MonoBehaviour
         if (scoredTeam == Team.Blue)
         {
             // Reward Blue Team
-            m_BlueAgentGroup.AddGroupReward(1.0f); // Group reward for scoring
+            m_BlueAgentGroup.AddGroupReward(2.0f); // Group reward for scoring
             m_PurpleAgentGroup.AddGroupReward(-0.5f); // Penalty for the opposing team
             DebugFileLogger.Log("Blue team rewarded.");
             //DebugFileLogger.Log($"{ballController.lastToucher.GetComponent<AgentSoccer>().name} scored!");
