@@ -36,7 +36,7 @@ behaviors:
     init_path: null
     keep_checkpoints: 5
     checkpoint_interval: 500000
-    max_steps: 2000000
+    max_steps: 3000000
     time_horizon: 500
     summary_freq: 10000
     threaded: false
@@ -71,9 +71,9 @@ checkpoint_settings:
   run_id: CompletedRewardSystem
   initialize_from: null
   load_model: false
-  resume: false
+  resume: true
   force: false
-  train_model: true
+  train_model: false
   inference: false
   results_dir: results
 torch_settings:
