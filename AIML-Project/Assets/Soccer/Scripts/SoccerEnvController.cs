@@ -36,6 +36,9 @@ public class SoccerEnvController : MonoBehaviour
     public Rigidbody ballRb;
     Vector3 m_BallStartingPos;
 
+    public GameObject purpleGoal;
+    public GameObject blueGoal;
+
     //List of Agents On Platform
     public List<PlayerInfo> AgentsList = new List<PlayerInfo>();
 
