@@ -893,7 +893,7 @@ GameObject:
   - component: {fileID: 809268605}
   - component: {fileID: 809268604}
   - component: {fileID: 809268603}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: GoalPurple
   m_TagString: purpleGoal
   m_Icon: {fileID: 0}
@@ -1217,7 +1217,7 @@ GameObject:
   - component: {fileID: 971710695}
   - component: {fileID: 971710694}
   - component: {fileID: 971710693}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: GoalBlue
   m_TagString: blueGoal
   m_Icon: {fileID: 0}
@@ -1359,7 +1359,7 @@ GameObject:
   - component: {fileID: 1420281431}
   - component: {fileID: 1420281430}
   - component: {fileID: 1420281429}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: GoalNetBlue
   m_TagString: blueGoal
   m_Icon: {fileID: 0}
@@ -1648,7 +1648,7 @@ GameObject:
   - component: {fileID: 2036291523}
   - component: {fileID: 2036291522}
   - component: {fileID: 2036291521}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: GoalNetPurple
   m_TagString: purpleGoal
   m_Icon: {fileID: 0}
@@ -2631,6 +2631,7 @@ Transform:
   - {fileID: 5643284048999299831}
   - {fileID: 257899726}
   - {fileID: 8629300324427488244}
+  - {fileID: 2759072315715873319}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &8122248192225965164
@@ -2648,6 +2649,8 @@ MonoBehaviour:
   MaxEnvironmentSteps: 5000
   ball: {fileID: 1682753582128710}
   ballRb: {fileID: 0}
+  purpleGoal: {fileID: 809268601}
+  blueGoal: {fileID: 971710691}
   AgentsList:
   - Agent: {fileID: 114850431417842684}
     StartingPos: {x: 0, y: 0, z: 0}
@@ -3070,6 +3073,9 @@ MonoBehaviour:
   hearingManager: {fileID: 3178994929163593869}
   purpleGoalTag: purpleGoal
   blueGoalTag: blueGoal
+  lastToucher: {fileID: 0}
+  assistAgent: {fileID: 0}
+  previousBallWasMoving: 0
 --- !u!54 &54100138833592438
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -4105,6 +4111,52 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!1 &5289058890812622587
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2759072315715873319}
+  - component: {fileID: 1114556413315481715}
+  m_Layer: 0
+  m_Name: GameObject
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!4 &2759072315715873319
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5289058890812622587}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0.7782939, y: -5.5874705, z: -0.5033761}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4558743310993102}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1114556413315481715
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5289058890812622587}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: deaefdd8244df7e42893d7478ec4c007, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ball: {fileID: 1682753582128710}
+  blueGoal: {fileID: 971710691}
 --- !u!1 &6007240757639156798
 GameObject:
   m_ObjectHideFlags: 0

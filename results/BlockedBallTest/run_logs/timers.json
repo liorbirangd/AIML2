@@ -1,0 +1,42 @@
+{
+    "name": "root",
+    "metadata": {
+        "timer_format_version": "0.1.0",
+        "start_time_seconds": "1733172885",
+        "python_version": "3.8.19 (default, Mar 20 2024, 19:55:45) [MSC v.1916 64 bit (AMD64)]",
+        "command_line_arguments": "C:\\anaconda3\\envs\\mlagents\\Scripts\\mlagents-learn config/poca/SoccerTwos.yaml --run-id=BlockedBallTest --train",
+        "mlagents_version": "0.28.0",
+        "mlagents_envs_version": "0.28.0",
+        "communication_protocol_version": "1.5.0",
+        "pytorch_version": "1.10.0+cpu",
+        "numpy_version": "1.19.5",
+        "end_time_seconds": "1733172947"
+    },
+    "total": 62.480509600000005,
+    "count": 1,
+    "self": 0.04963340000001182,
+    "children": {
+        "run_training.setup": {
+            "total": 0.23743330000000018,
+            "count": 1,
+            "self": 0.23743330000000018
+        },
+        "TrainerController.start_learning": {
+            "total": 62.193442899999994,
+            "count": 1,
+            "self": 0.0034488000000081342,
+            "children": {
+                "TrainerController._reset_env": {
+                    "total": 62.188143399999994,
+                    "count": 1,
+                    "self": 62.188143399999994
+                },
+                "TrainerController._save_models": {
+                    "total": 0.0018506999999914342,
+                    "count": 1,
+                    "self": 0.0018506999999914342
+                }
+            }
+        }
+    }
+}
