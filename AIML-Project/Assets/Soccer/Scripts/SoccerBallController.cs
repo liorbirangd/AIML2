@@ -1,3 +1,4 @@
+using Soccer.Scripts.Enums;
 using UnityEngine;
 
 public class SoccerBallController : MonoBehaviour

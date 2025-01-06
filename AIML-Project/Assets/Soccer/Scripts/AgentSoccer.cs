@@ -8,12 +8,8 @@ using UnityEngine.InputSystem;
 using System;
 using static UnityEngine.GraphicsBuffer;
 using System.Collections;
-
-public enum Team
-{
-    Blue = 0,
-    Purple = 1
-}
+using Soccer.Scripts.Enums;
+using Soccer.Scripts.Rewards;
 
 public class AgentSoccer : Agent
 {
@@ -24,17 +20,11 @@ public class AgentSoccer : Agent
     // * wall
     // * own teammate
     // * opposing player
-
-    public enum Position
-    {
-        Striker,
-        Goalie,
-        Generic
-    }
-
-
-    private HearingSensorController hearingSensor;
     
+    private RewardManager rewardManager;
+    private List<RewardComponent> rewardComponents;
+    private HearingSensorController hearingSensor;
+
     [HideInInspector] public Team team;
 
     float m_KickPower;
@@ -67,14 +57,10 @@ public class AgentSoccer : Agent
     public override void Initialize()
     {
         envController = GetComponentInParent<SoccerEnvController>();
-        if (envController != null)
-        {
-            m_Existential = 1f / envController.MaxEnvironmentSteps;
-        }
-        else
-        {
-            m_Existential = 1f / MaxStep;
-        }
+        rewardManager = new RewardManager();
+        if(envController == null) throw new Exception("SoccerEnvController not found");
+        rewardComponents = new List<RewardComponent>();
+        rewardComponents.Add(new ExistantialRewardComponent(rewardManager,envController));
 
         m_BehaviorParameters = gameObject.GetComponent<BehaviorParameters>();
         if (m_BehaviorParameters.TeamId == (int)Team.Blue)
@@ -120,7 +106,8 @@ public class AgentSoccer : Agent
         if (position == Position.Goalie)
         {
             // Existential bonus for Goalies.
-            AddReward(m_Existential);
+            //AddReward(m_Existential);
+            rewardManager.OnActionedPerformed.Invoke();
 
             // Execute the BallBasedPositionalReward only at specific intervals
             positionalRewardStepCounter++;
@@ -169,7 +156,8 @@ public class AgentSoccer : Agent
             if (distanceGoalieToGoal < distanceBallToGoal)
             {
                 AddReward(0.05f); // Reward for being closer
-                DebugFileLogger.Log($"Goalie rewarded for being closer to the goal than the ball. Distance: {distanceGoalieToGoal} < {distanceBallToGoal}");
+                DebugFileLogger.Log(
+                    $"Goalie rewarded for being closer to the goal than the ball. Distance: {distanceGoalieToGoal} < {distanceBallToGoal}");
             }
             else
             {
@@ -253,7 +241,8 @@ public class AgentSoccer : Agent
             StartCoroutine(DelayedRewardCheck(preContactVelocity, ballRb, c.gameObject));
 
             // Emit sound event
-            awarenessSystem.hearingManager.OnSoundEmitted(gameObject, transform.position, EHeardSoundCategory.EKick, 3f);
+            awarenessSystem.hearingManager.OnSoundEmitted(gameObject, transform.position, EHeardSoundCategory.EKick,
+                3f);
         }
     }
 
@@ -269,14 +258,16 @@ public class AgentSoccer : Agent
         // Check if the ball was heading toward the goal before contact
         DebugFileLogger.Log($"       Block Check...");
         DebugFileLogger.Log($"Before contact, the ball: ");
-        bool wasHeadingToGoal = IsBallHeadingTowardsGoal(preContactVelocity, ball.transform.position, ownGoalTag, rayDistance);
+        bool wasHeadingToGoal =
+            IsBallHeadingTowardsGoal(preContactVelocity, ball.transform.position, ownGoalTag, rayDistance);
         DebugFileLogger.Log($"so wasHeadingTowardGoal: {wasHeadingToGoal}");
 
         if (wasHeadingToGoal)
         {
             DebugFileLogger.Log($"After contact, the ball: ");
             Vector3 postContactVelocity = ballRb.velocity.normalized; // Get updated velocity
-            bool isHeadingAwayFromGoal = !IsBallHeadingTowardsGoal(postContactVelocity, ball.transform.position, ownGoalTag, rayDistance);
+            bool isHeadingAwayFromGoal =
+                !IsBallHeadingTowardsGoal(postContactVelocity, ball.transform.position, ownGoalTag, rayDistance);
             DebugFileLogger.Log($"so isHeadingAwayFromGoal: {isHeadingAwayFromGoal}");
 
             // Reward for blocking a potential goal
@@ -315,7 +306,8 @@ public class AgentSoccer : Agent
         }
     }
 
-    private bool IsBallHeadingTowardsGoal(Vector3 ballDirection, Vector3 ballPosition, String goalTag, float rayDistance)
+    private bool IsBallHeadingTowardsGoal(Vector3 ballDirection, Vector3 ballPosition, String goalTag,
+        float rayDistance)
     {
         LayerMask targetLayer;
         targetLayer = LayerMask.GetMask("Goal");
@@ -331,6 +323,7 @@ public class AgentSoccer : Agent
                 return true; // Moving towards and ray hits target
             }
         }
+
         DebugFileLogger.Log("was not moving towards goal");
         return false; // Moving towards based on direction
     }
@@ -340,7 +333,7 @@ public class AgentSoccer : Agent
     {
         if (hearingSensor != null)
             hearingSensor.AddObservations(sensor);
-        if(awarenessSystem != null)
+        if (awarenessSystem != null)
             awarenessSystem.AddObservations(sensor);
     }
 

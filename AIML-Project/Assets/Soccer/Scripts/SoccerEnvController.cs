@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Soccer.Scripts.Enums;
 using Unity.MLAgents;
 using UnityEngine;
 
