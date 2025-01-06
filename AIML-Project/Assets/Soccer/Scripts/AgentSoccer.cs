@@ -61,8 +61,8 @@ public class AgentSoccer : Agent
 
     SoccerEnvController envController;
 
-    private int positionalRewardStepCounter = 0; // Step counter for positional rewards
-    private const int positionalRewardStepInterval = 100; // Execute every 100 steps
+    //private int positionalRewardStepCounter = 0; // Step counter for positional rewards
+    //private const int positionalRewardStepInterval = 100; // Execute every 100 steps
 
     public override void Initialize()
     {
@@ -123,12 +123,12 @@ public class AgentSoccer : Agent
             AddReward(m_Existential);
 
             // Execute the BallBasedPositionalReward only at specific intervals
-            positionalRewardStepCounter++;
-            if (positionalRewardStepCounter >= positionalRewardStepInterval)
-            {
-                BallBasedPositionalReward();
-                positionalRewardStepCounter = 0; // Reset counter
-            }
+            //positionalRewardStepCounter++;
+            //if (positionalRewardStepCounter >= positionalRewardStepInterval)
+            //{
+            //    BallBasedPositionalReward();
+            //    positionalRewardStepCounter = 0; // Reset counter
+            //}
         }
         else if (position == Position.Striker)
         {
@@ -140,47 +140,47 @@ public class AgentSoccer : Agent
     }
 
 
-    private void BallBasedPositionalReward()
-    {
-        // Ball and goal references
-        var ball = GameObject.FindWithTag("ball");
-        if (ball == null) return;
+    //private void BallBasedPositionalReward()
+    //{
+    //    // Ball and goal references
+    //    var ball = GameObject.FindWithTag("ball");
+    //    if (ball == null) return;
 
-        // Define the position of the goal
-        GameObject ownGoal = team == Team.Blue
-            ? envController.blueGoal
-            : envController.purpleGoal;
+    //    // Define the position of the goal
+    //    GameObject ownGoal = team == Team.Blue
+    //        ? envController.blueGoal
+    //        : envController.purpleGoal;
 
-        // Get the ball's position
-        Vector3 ballPosition = ball.transform.position;
+    //    // Get the ball's position
+    //    Vector3 ballPosition = ball.transform.position;
 
 
-        // Define a defensive zone threshold (distance from the goal)
-        float defensiveZoneRadius = 15.5f; // Adjust based on your field size
-        // Calculate distance from ball to the goal
-        float distanceBallToGoal = Vector3.Distance(ballPosition, ownGoal.transform.position);
-        DebugFileLogger.Log($"Ball to Goal Distance: {distanceBallToGoal} < 15.5");
-        // Only reward if the ball is within the defensive zone
-        if (distanceBallToGoal <= defensiveZoneRadius)
-        {
-            float distanceGoalieToGoal = Vector3.Distance(transform.position, ownGoal.transform.position);
+    //    // Define a defensive zone threshold (distance from the goal)
+    //    float defensiveZoneRadius = 15.5f; // Adjust based on your field size
+    //    // Calculate distance from ball to the goal
+    //    float distanceBallToGoal = Vector3.Distance(ballPosition, ownGoal.transform.position);
+    //    DebugFileLogger.Log($"Ball to Goal Distance: {distanceBallToGoal} < 15.5");
+    //    // Only reward if the ball is within the defensive zone
+    //    if (distanceBallToGoal <= defensiveZoneRadius)
+    //    {
+    //        float distanceGoalieToGoal = Vector3.Distance(transform.position, ownGoal.transform.position);
 
-            // Reward the goalie for being closer to the goal than the ball
-            if (distanceGoalieToGoal < distanceBallToGoal)
-            {
-                AddReward(0.05f); // Reward for being closer
-                DebugFileLogger.Log($"Goalie rewarded for being closer to the goal than the ball. Distance: {distanceGoalieToGoal} < {distanceBallToGoal}");
-            }
-            else
-            {
-                DebugFileLogger.Log("No reward. Goalie is farther from the goal than the ball but no penalty applied.");
-            }
-        }
-        else
-        {
-            DebugFileLogger.Log("No positional reward. Ball is outside the defensive zone.");
-        }
-    }
+    //        // Reward the goalie for being closer to the goal than the ball
+    //        if (distanceGoalieToGoal < distanceBallToGoal)
+    //        {
+    //            AddReward(0.05f); // Reward for being closer
+    //            DebugFileLogger.Log($"Goalie rewarded for being closer to the goal than the ball. Distance: {distanceGoalieToGoal} < {distanceBallToGoal}");
+    //        }
+    //        else
+    //        {
+    //            DebugFileLogger.Log("No reward. Goalie is farther from the goal than the ball but no penalty applied.");
+    //        }
+    //    }
+    //    else
+    //    {
+    //        DebugFileLogger.Log("No positional reward. Ball is outside the defensive zone.");
+    //    }
+    //}
 
     public override void Heuristic(in ActionBuffers actionsOut)
     {
