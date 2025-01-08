@@ -30,7 +30,7 @@ public class Dummy : MonoBehaviour
         Debug.Log(check);
     }
 
-    private bool IsBallHeadingTowardsGoal(Vector3 ballDirection, Vector3 ballPosition, String goalTag, float rayDistance)
+    private bool IsBallHeadingTowardsGoal(Vector3 ballDirection, Vector3 ballPosition, string goalTag, float rayDistance)
     {
         DebugFileLogger.Log("Checking...");
         LayerMask targetLayer;
