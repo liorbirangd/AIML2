@@ -2,6 +2,6 @@
 {
     public interface IRewardableAgent
     {
-        public void getReward(float value);
+        public void addReward(float value);
     }
 }

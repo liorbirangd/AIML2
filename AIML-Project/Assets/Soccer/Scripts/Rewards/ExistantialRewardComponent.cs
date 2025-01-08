@@ -1,12 +1,10 @@
-﻿using System;
-using Soccer.Scripts.Enums;
+﻿using Soccer.Scripts.Enums;
 
 namespace Soccer.Scripts.Rewards
 {
     public class ExistantialRewardComponent : RewardComponent
     {
         private float existentialValue;
-
 
         public ExistantialRewardComponent(RewardManager manager, IRewardableAgent agent,
             SoccerEnvController envController) : base(manager, agent)
@@ -30,7 +28,7 @@ namespace Soccer.Scripts.Rewards
                     reward = 0;
                     break;
             }
-            agent.getReward(reward);
+            agent.addReward(reward);
         }
     }
 }
