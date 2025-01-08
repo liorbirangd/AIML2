@@ -11,7 +11,7 @@ using System.Collections;
 using Soccer.Scripts.Enums;
 using Soccer.Scripts.Rewards;
 
-public class AgentSoccer : Agent
+public class AgentSoccer : Agent, IRewardableAgent
 {
     // Note that that the detectable tags are different for the blue and purple teams. The order is
     // * ball
@@ -20,7 +20,7 @@ public class AgentSoccer : Agent
     // * wall
     // * own teammate
     // * opposing player
-    
+
     private RewardManager rewardManager;
     private List<RewardComponent> rewardComponents;
     private HearingSensorController hearingSensor;
@@ -58,9 +58,9 @@ public class AgentSoccer : Agent
     {
         envController = GetComponentInParent<SoccerEnvController>();
         rewardManager = new RewardManager();
-        if(envController == null) throw new Exception("SoccerEnvController not found");
+        if (envController == null) throw new Exception("SoccerEnvController not found");
         rewardComponents = new List<RewardComponent>();
-        rewardComponents.Add(new ExistantialRewardComponent(rewardManager,envController));
+        rewardComponents.Add(new ExistantialRewardComponent(rewardManager, this, envController));
 
         m_BehaviorParameters = gameObject.GetComponent<BehaviorParameters>();
         if (m_BehaviorParameters.TeamId == (int)Team.Blue)
@@ -103,12 +103,11 @@ public class AgentSoccer : Agent
 
     public override void OnActionReceived(ActionBuffers actionBuffers)
     {
+        // Existential bonus for Goalies.
+        //AddReward(m_Existential);
+        rewardManager.OnActionedPerformed.Invoke(position);
         if (position == Position.Goalie)
         {
-            // Existential bonus for Goalies.
-            //AddReward(m_Existential);
-            rewardManager.OnActionedPerformed.Invoke();
-
             // Execute the BallBasedPositionalReward only at specific intervals
             positionalRewardStepCounter++;
             if (positionalRewardStepCounter >= positionalRewardStepInterval)
@@ -117,12 +116,6 @@ public class AgentSoccer : Agent
                 positionalRewardStepCounter = 0; // Reset counter
             }
         }
-        else if (position == Position.Striker)
-        {
-            // Existential penalty for Strikers
-            AddReward(-m_Existential);
-        }
-
         MoveAgent(actionBuffers.DiscreteActions);
     }
 
@@ -399,5 +392,10 @@ public class AgentSoccer : Agent
                 2f);
             soundTimer = 0;
         }
+    }
+
+    public void getReward(float value)
+    {
+        AddReward(value);
     }
 }

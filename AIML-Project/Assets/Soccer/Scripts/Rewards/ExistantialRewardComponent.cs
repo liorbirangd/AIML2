@@ -1,17 +1,36 @@
-﻿namespace Soccer.Scripts.Rewards
+﻿using System;
+using Soccer.Scripts.Enums;
+
+namespace Soccer.Scripts.Rewards
 {
-    public class ExistantialRewardComponent:RewardComponent
+    public class ExistantialRewardComponent : RewardComponent
     {
         private float existentialValue;
-        RewardManager manager;
-        public ExistantialRewardComponent(RewardManager manager, SoccerEnvController envController)
+
+
+        public ExistantialRewardComponent(RewardManager manager, IRewardableAgent agent,
+            SoccerEnvController envController) : base(manager, agent)
         {
-            this.manager = manager;
-            existentialValue= 1f / envController.MaxEnvironmentSteps;
+            existentialValue = 1f / envController.MaxEnvironmentSteps;
+            manager.OnActionedPerformed.AddListener(addReward);
         }
-        public void addReward()
+
+        public void addReward(Position position)
         {
-            throw new System.NotImplementedException();
+            float reward;
+            switch (position)
+            {
+                case Position.Striker:
+                    reward = existentialValue;
+                    break;
+                case Position.Goalie:
+                    reward = -existentialValue;
+                    break;
+                default:
+                    reward = 0;
+                    break;
+            }
+            agent.getReward(reward);
         }
     }
 }

@@ -1,7 +1,14 @@
 ﻿namespace Soccer.Scripts.Rewards
 {
-    public interface RewardComponent
+    public abstract class RewardComponent
     {
-        public void addReward();
+        protected RewardManager manager;
+        protected IRewardableAgent agent;
+
+        public RewardComponent(RewardManager manager, IRewardableAgent agent)
+        {
+            this.manager = manager;
+            this.agent = agent;
+        }
     }
 }
