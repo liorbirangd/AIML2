@@ -10,5 +10,6 @@ namespace Soccer.Scripts.Rewards
         public UnityEvent<Position> OnActionedPerformed;
         public UnityEvent<Team,Vector3> OnBallPositioningCheck;
         public UnityEvent OnBallTouched;
+        public UnityEvent<Vector3,Rigidbody,GameObject> OnKickDirectionCheck;
     }
 }
