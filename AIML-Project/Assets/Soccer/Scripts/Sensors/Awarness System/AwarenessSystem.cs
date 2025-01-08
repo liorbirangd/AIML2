@@ -95,7 +95,7 @@ public class AwarenessSystem : MonoBehaviour
         }
     }
 
-    private static int GetTagValue(String tag)
+    private static int GetTagValue(string tag)
     {
         switch (tag)
         {

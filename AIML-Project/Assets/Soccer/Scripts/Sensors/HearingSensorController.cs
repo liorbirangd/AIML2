@@ -13,9 +13,9 @@ public class HearingSensorController : MonoBehaviour
     private int observNmbr = 4;
     private float minVelMag = 0.01f;
 
-    private String tagBall = "ball";
-    private String tagBA = "blueAgent";
-    private String tagPA = "purpleAgent";
+    private string tagBall = "ball";
+    private string tagBA = "blueAgent";
+    private string tagPA = "purpleAgent";
 
     //Create list of observations
     private void Start()
