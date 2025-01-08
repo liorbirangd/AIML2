@@ -113,8 +113,6 @@ public class AgentSoccer : Agent, IRewardableAgent
 
     public override void OnActionReceived(ActionBuffers actionBuffers)
     {
-        // Existential bonus for Goalies.
-        //AddReward(m_Existential);
         rewardManager.OnActionedPerformed.Invoke(position);
         if (position == Position.Goalie)
         {
@@ -185,8 +183,6 @@ public class AgentSoccer : Agent, IRewardableAgent
 
         if (c.gameObject.CompareTag("ball"))
         {
-            //AddReward(.2f * m_BallTouch);
-            //DebugFileLogger.Log("Agent Touch Reward.");
             rewardManager.OnBallTouched.Invoke();
 
             // Apply force to the ball
