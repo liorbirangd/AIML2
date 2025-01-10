@@ -2,9 +2,22 @@ using System.Collections.Generic;
 using Soccer.Scripts.Enums;
 using Unity.MLAgents;
 using UnityEngine;
+using Soccer.Scripts;
 
 public class SoccerEnvController : MonoBehaviour
 {
+
+    private MetricsLogger metricsLogger;
+    private int trainingSteps = 0;
+    private int blueGoals = 0;
+    private int purpleGoals = 0;
+    private float blueRewards = 0f;
+    private float purpleRewards = 0f;
+    private const int RECORD_INTERVAL = 10;
+    //10k bc it matches the current summary_freq in the yaml files of ppo and poca
+    // summary_freq:Number of experiences that needs to be collected before generating and displaying
+    //training statistics.
+
     [System.Serializable]
     public class PlayerInfo
     {
@@ -54,6 +67,8 @@ public class SoccerEnvController : MonoBehaviour
     void Start()
     {
 
+        metricsLogger = new MetricsLogger();
+
         m_SoccerSettings = FindObjectOfType<SoccerSettings>();
         // Initialize TeamManager
         m_BlueAgentGroup = new SimpleMultiAgentGroup();
@@ -80,6 +95,7 @@ public class SoccerEnvController : MonoBehaviour
     void FixedUpdate()
     {
         m_ResetTimer += 1;
+
         if (m_ResetTimer >= MaxEnvironmentSteps && MaxEnvironmentSteps > 0)
         {
             m_BlueAgentGroup.GroupEpisodeInterrupted();
@@ -88,6 +104,21 @@ public class SoccerEnvController : MonoBehaviour
         }
     }
 
+    public void IncrementTrainingStep()
+    {
+        trainingSteps++;
+        
+        if (trainingSteps % RECORD_INTERVAL == 0)
+        {
+            LogMetrics();
+        }
+    }
+
+    private void LogMetrics()
+    {
+        metricsLogger.LogMetrics(trainingSteps, blueGoals, purpleGoals, blueRewards, purpleRewards);
+        ResetMetrics();
+    }
 
     public void ResetBall()
     {
@@ -107,6 +138,11 @@ public class SoccerEnvController : MonoBehaviour
         var ballController = ball.GetComponent<SoccerBallController>();
         if (scoredTeam == Team.Blue)
         {
+
+            blueGoals++;
+            blueRewards += 2.0f;
+            purpleRewards -= 0.5f;
+
             // Reward Blue Team
             m_BlueAgentGroup.AddGroupReward(2.0f); // Group reward for scoring
             m_PurpleAgentGroup.AddGroupReward(-0.5f); // Penalty for the opposing team
@@ -131,6 +167,11 @@ public class SoccerEnvController : MonoBehaviour
         }
         else
         {
+
+            purpleGoals++;
+            purpleRewards += 1.0f;
+            blueRewards -= 0.5f;
+
             // Reward Purple Team
             m_PurpleAgentGroup.AddGroupReward(1.0f); // Group reward for scoring
             m_BlueAgentGroup.AddGroupReward(-0.5f); // Penalty for the opposing team
@@ -180,5 +221,13 @@ public class SoccerEnvController : MonoBehaviour
 
         //Reset Ball
         ResetBall();
+    }
+
+    private void ResetMetrics()
+    {
+        blueGoals = 0;
+        purpleGoals = 0;
+        blueRewards = 0f;
+        purpleRewards = 0f;
     }
 }

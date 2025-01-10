@@ -125,6 +125,9 @@ public class AgentSoccer : Agent, IRewardableAgent
             }
         }
 
+        envController.IncrementTrainingStep();
+        Debug.Log("action received");
+
         MoveAgent(actionBuffers.DiscreteActions);
     }
 
