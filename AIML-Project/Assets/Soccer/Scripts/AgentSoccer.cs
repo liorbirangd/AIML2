@@ -25,6 +25,11 @@ public class AgentSoccer : Agent
     // * own teammate
     // * opposing player
 
+    private int teamChangeSteps = 200000; // Matches the `team_change` parameter in config
+    private int currentStep = 0;
+
+    private string currentLearningTeam = "Blue"; // Initial learning team
+
     public enum Position
     {
         Striker,
@@ -115,8 +120,29 @@ public class AgentSoccer : Agent
         awarenessSystem = GetComponentInChildren<AwarenessSystem>();
     }
 
+    void ScoreLogger()
+    {
+        // Increment step counter
+        currentStep = Academy.Instance.StepCount;
+        // Detect when the learning team changes
+        if (currentStep % teamChangeSteps == 0 && currentStep > 0)
+        {
+            // Log the results
+            envController.LogScores(currentStep, currentLearningTeam);
+
+            // Alternate the learning team
+            currentLearningTeam = (currentLearningTeam == "Blue") ? "Purple" : "Blue";
+            envController.SetCurrentLearningTeam(currentLearningTeam);
+
+            // Reset counters for the new phase
+            envController.ClearGoals();
+        }
+    }
+
     public override void OnActionReceived(ActionBuffers actionBuffers)
     {
+        ScoreLogger();
+
         if (position == Position.Goalie)
         {
             // Existential bonus for Goalies.

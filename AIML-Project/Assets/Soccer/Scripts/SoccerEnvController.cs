@@ -1,9 +1,17 @@
 using System.Collections.Generic;
+using System.IO;
 using Unity.MLAgents;
 using UnityEngine;
 
 public class SoccerEnvController : MonoBehaviour
 {
+
+    private int learningTeamGoals = 0;
+    private int opposingTeamGoals = 0;
+    private string currentLearningTeam = "Blue";
+
+    //private StreamWriter logFile;
+
     [System.Serializable]
     public class PlayerInfo
     {
@@ -87,6 +95,27 @@ public class SoccerEnvController : MonoBehaviour
         }
     }
 
+   
+
+    public void LogScores(int currentStep, string currentLearningTeam)
+    {
+        string logEntry = $"Step {currentStep}: LearningTeam ({currentLearningTeam}) Goals = {learningTeamGoals}, Opponent Goals = {opposingTeamGoals}";
+
+        // Write to file
+        DebugScoreFileLogger.Log(logEntry);
+    }
+
+    public void ClearGoals() 
+    {
+        learningTeamGoals = 0;
+        opposingTeamGoals = 0;
+    }
+
+    public void SetCurrentLearningTeam(string learningTeam)
+    {
+        currentLearningTeam = learningTeam;
+    }
+
 
     public void ResetBall()
     {
@@ -99,9 +128,20 @@ public class SoccerEnvController : MonoBehaviour
 
     }
 
+
     public void GoalTouched(Team scoredTeam)
     {
         DebugFileLogger.Log($"Goal scored by {scoredTeam} team!");
+        
+        // Increment the appropriate counter based on the current learning team
+        if (scoredTeam.ToString() ==  currentLearningTeam)
+        {
+            learningTeamGoals++;
+        }
+        else
+        {
+            opposingTeamGoals++;
+        }
 
         var ballController = ball.GetComponent<SoccerBallController>();
         if (scoredTeam == Team.Blue)
