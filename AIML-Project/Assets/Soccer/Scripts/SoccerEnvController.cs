@@ -8,7 +8,7 @@ public class SoccerEnvController : MonoBehaviour
 {
 
     private MetricsLogger metricsLogger;
-    private int trainingSteps = 0;
+    //private int trainingSteps = 0;
     private int blueGoals = 0;
     private int purpleGoals = 0;
     private float blueRewards = 0f;
@@ -104,19 +104,19 @@ public class SoccerEnvController : MonoBehaviour
         }
     }
 
-    public void IncrementTrainingStep()
+    public void IncrementTrainingStep(int stepCounter)
     {
-        trainingSteps++;
+        //trainingSteps++;
         
-        if (trainingSteps % RECORD_INTERVAL == 0)
+        if (stepCounter % RECORD_INTERVAL == 0)
         {
-            LogMetrics();
+            LogMetrics(stepCounter);
         }
     }
 
-    private void LogMetrics()
+    private void LogMetrics(int stepCounter)
     {
-        metricsLogger.LogMetrics(trainingSteps, blueGoals, purpleGoals, blueRewards, purpleRewards);
+        metricsLogger.LogMetrics(stepCounter, blueGoals, purpleGoals, blueRewards, purpleRewards);
         ResetMetrics();
     }
 

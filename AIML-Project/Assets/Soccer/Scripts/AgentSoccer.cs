@@ -51,7 +51,7 @@ public class AgentSoccer : Agent, IRewardableAgent
 
     SoccerEnvController envController;
 
-    private int positionalRewardStepCounter = 0; // Step counter for positional rewards
+    private int stepCounter = 0; // Step counter for positional rewards
     private const int positionalRewardStepInterval = 100; // Execute every 100 steps
 
     public override void Initialize()
@@ -113,19 +113,20 @@ public class AgentSoccer : Agent, IRewardableAgent
 
     public override void OnActionReceived(ActionBuffers actionBuffers)
     {
+        Debug.Log(m_BehaviorParameters.TeamId);
         rewardManager.OnActionedPerformed.Invoke(position);
         if (position == Position.Goalie)
         {
             // Execute the BallBasedPositionalReward only at specific intervals
-            positionalRewardStepCounter++;
-            if (positionalRewardStepCounter >= positionalRewardStepInterval)
+            stepCounter++;
+            if (stepCounter >= positionalRewardStepInterval)
             {
                 rewardManager.OnBallPositioningCheck.Invoke(team, transform.position);
-                positionalRewardStepCounter = 0; // Reset counter
+                stepCounter = 0; // Reset counter
             }
         }
 
-        envController.IncrementTrainingStep();
+        envController.IncrementTrainingStep(stepCounter);
         Debug.Log("action received");
 
         MoveAgent(actionBuffers.DiscreteActions);

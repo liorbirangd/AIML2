@@ -48,7 +48,8 @@ namespace Soccer.Scripts
                 purpleRewards.ToString("F2")
             };
             
-            WriteRow(string.Join(",", rowData));
+            //WriteRow(string.Join(",", rowData));
+            WriteRow(string.Join(",","hello"));
         }
         
         private void WriteRow(string row)
