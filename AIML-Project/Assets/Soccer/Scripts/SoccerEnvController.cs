@@ -47,6 +47,11 @@ public class SoccerEnvController : MonoBehaviour
 
     private int m_ResetTimer;
 
+    private int learningTeamGoals = 0;
+    private int opposingTeamGoals = 0;
+    private string currentLearningTeam = "Blue";
+
+    private int lastLoggedStep= 0;
     void Start()
     {
 
@@ -73,17 +78,109 @@ public class SoccerEnvController : MonoBehaviour
         ResetScene();
     }
 
-    void FixedUpdate()
+    public void LogScores(int currentStep, string currentLearningTeam)
     {
-        m_ResetTimer += 1;
-        if (m_ResetTimer >= MaxEnvironmentSteps && MaxEnvironmentSteps > 0)
-        {
-            m_BlueAgentGroup.GroupEpisodeInterrupted();
-            m_PurpleAgentGroup.GroupEpisodeInterrupted();
-            ResetScene();
-        }
+        string logEntry = $"Step {currentStep}: LearningTeam ({currentLearningTeam}) Goals = {learningTeamGoals}, Opponent Goals = {opposingTeamGoals}";
+
+        // Write to file
+        DebugFileLogger.Log(logEntry);
     }
 
+    public void ClearGoals() 
+    {
+        learningTeamGoals = 0;
+        opposingTeamGoals = 0;
+    }
+
+    public void SetCurrentLearningTeam(string learningTeam)
+    {
+        currentLearningTeam = learningTeam;
+    }
+
+    // void FixedUpdate()
+    // {
+    //     m_ResetTimer += 1;
+    //     int currentStep = Academy.Instance.StepCount;
+
+    //     if (currentStep % 1000 == 0 && currentStep > 0 && currentStep != lastLoggedStep)
+    // {
+    //     LogScores(currentStep, currentLearningTeam);
+    //     lastLoggedStep = currentStep;
+    //     currentLearningTeam = (currentLearningTeam == "Blue") ? "Purple" : "Blue";
+    //     ClearGoals();
+    // }
+
+    // //     if (m_ResetTimer % 1000 == 0 && m_ResetTimer > 0)
+    // // {
+    // //     //int stepToLog = (currentGlobalStep / 1000) * 1000;
+    // //     LogScores(m_ResetTimer, currentLearningTeam);
+    // //     //LogScores(stepToLog, currentLearningTeam);
+        
+    // //     // Switch teams
+    // //     currentLearningTeam = (currentLearningTeam == "Blue") ? "Purple" : "Blue";
+        
+    // //     // Reset counters for the new phase
+    // //     ClearGoals();
+    // // }
+    
+    //     if (m_ResetTimer >= MaxEnvironmentSteps && MaxEnvironmentSteps > 0)
+    //     {
+    //         m_BlueAgentGroup.GroupEpisodeInterrupted();
+    //         m_PurpleAgentGroup.GroupEpisodeInterrupted();
+    //         ResetScene();
+    //     }
+    // }
+
+    void FixedUpdate()
+{
+    m_ResetTimer += 1;
+    // int currentStep = Academy.Instance.StepCount;
+
+    // // Log scores every 1000 steps
+    // if (currentStep >= lastLoggedStep + 1000)
+    // {
+    //     LogScores(currentStep, currentLearningTeam);
+    //     lastLoggedStep = currentStep;
+
+    //     // Optionally switch teams every 1000 steps
+    //     currentLearningTeam = (currentLearningTeam == "Blue") ? "Purple" : "Blue";
+    //     ClearGoals();
+    // }
+
+    // Reset the environment if the max steps are reached
+    if (m_ResetTimer >= MaxEnvironmentSteps && MaxEnvironmentSteps > 0)
+    {
+        m_BlueAgentGroup.GroupEpisodeInterrupted();
+        m_PurpleAgentGroup.GroupEpisodeInterrupted();
+        ResetScene();
+    }
+}
+
+//     void FixedUpdate()
+// {
+//     int currentGlobalStep = Academy.Instance.StepCount;
+    
+//     if (currentGlobalStep >= lastLoggedStep + 1000)
+//     {
+//         int stepToLog = (currentGlobalStep / 1000) * 1000;
+//         LogScores(stepToLog, currentLearningTeam);
+        
+//         // Switch teams
+//         currentLearningTeam = (currentLearningTeam == "Blue") ? "Purple" : "Blue";
+        
+//         // Reset counters for the new phase
+//         ClearGoals();
+        
+//         lastLoggedStep = stepToLog;
+//     }
+    
+//     if (currentGlobalStep >= MaxEnvironmentSteps && MaxEnvironmentSteps > 0)
+//     {
+//         m_BlueAgentGroup.GroupEpisodeInterrupted();
+//         m_PurpleAgentGroup.GroupEpisodeInterrupted();
+//         ResetScene();
+//     }
+// }
 
     public void ResetBall()
     {
@@ -98,6 +195,17 @@ public class SoccerEnvController : MonoBehaviour
 
     public void GoalTouched(Team scoredTeam)
     {
+
+        // Increment the appropriate counter based on the current learning team
+        if (scoredTeam.ToString() ==  currentLearningTeam)
+        {
+            learningTeamGoals++;
+        }
+        else
+        {
+            opposingTeamGoals++;
+        }
+
         if (scoredTeam == Team.Blue)
         {
             m_BlueAgentGroup.AddGroupReward(1 - (float)m_ResetTimer / MaxEnvironmentSteps);

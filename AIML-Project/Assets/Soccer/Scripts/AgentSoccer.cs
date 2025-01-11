@@ -48,9 +48,16 @@ public class AgentSoccer : Agent
 
     EnvironmentParameters m_ResetParams;
 
+    SoccerEnvController envController;
+
+    private int teamChangeSteps = 1000; // Matches the `team_change` parameter in config
+    private int currentStep = 0;
+
+    private string currentLearningTeam = "Blue"; // Initial learning team
+
     public override void Initialize()
     {
-        SoccerEnvController envController = GetComponentInParent<SoccerEnvController>();
+        envController = GetComponentInParent<SoccerEnvController>();
         if (envController != null)
         {
             m_Existential = 1f / envController.MaxEnvironmentSteps;
@@ -95,9 +102,29 @@ public class AgentSoccer : Agent
         m_ResetParams = Academy.Instance.EnvironmentParameters;
     }
 
+     void ScoreLogger()
+    {
+        // Increment step counter
+        currentStep = Academy.Instance.StepCount;
+        // Detect when the learning team changes
+        if (currentStep % teamChangeSteps == 0 && currentStep > 0)
+        {
+            // Log the results
+            envController.LogScores(currentStep, currentLearningTeam);
+
+            // Alternate the learning team
+            currentLearningTeam = (currentLearningTeam == "Blue") ? "Purple" : "Blue";
+            envController.SetCurrentLearningTeam(currentLearningTeam);
+
+            // Reset counters for the new phase
+            envController.ClearGoals();
+        }
+    }
     public override void OnActionReceived(ActionBuffers actionBuffers)
 
     {
+
+        //ScoreLogger();
 
         if (position == Position.Goalie)
         {
