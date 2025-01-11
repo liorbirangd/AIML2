@@ -109,6 +109,7 @@ public class AgentSoccer : Agent
         // Detect when the learning team changes
         if (currentStep % teamChangeSteps == 0 && currentStep > 0)
         {
+            Debug.Log($"Logging scores at step {currentStep}");
             // Log the results
             envController.LogScores(currentStep, currentLearningTeam);
 
@@ -124,7 +125,7 @@ public class AgentSoccer : Agent
 
     {
 
-        //ScoreLogger();
+        ScoreLogger();
 
         if (position == Position.Goalie)
         {

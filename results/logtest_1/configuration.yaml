@@ -73,7 +73,7 @@ checkpoint_settings:
   load_model: false
   resume: false
   force: false
-  train_model: true
+  train_model: false
   inference: false
   results_dir: results
 torch_settings:
