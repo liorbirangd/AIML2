@@ -50,13 +50,19 @@ public class AgentSoccer : Agent
 
     SoccerEnvController envController;
 
-    private int teamChangeSteps = 1000; // Matches the `team_change` parameter in config
-    private int currentStep = 0;
+    //private int teamChangeSteps = 2000; // Matches the `team_change` parameter in config
+    //private int currentStep = 0;
+    //private string currentLearningTeam = "Blue"; // Initial learning team
+    //int decisionPeriod = 5;
+    //private int lastTrainingStep = 0;
+    //private int decisionStepsPerTrainingStep = 2;
+    //private int lastLoggedStep=0;
 
-    private string currentLearningTeam = "Blue"; // Initial learning team
+    private int globalCounter=0;
 
     public override void Initialize()
     {
+
         envController = GetComponentInParent<SoccerEnvController>();
         if (envController != null)
         {
@@ -102,30 +108,56 @@ public class AgentSoccer : Agent
         m_ResetParams = Academy.Instance.EnvironmentParameters;
     }
 
-     void ScoreLogger()
-    {
-        // Increment step counter
-        currentStep = Academy.Instance.StepCount;
-        // Detect when the learning team changes
-        if (currentStep % teamChangeSteps == 0 && currentStep > 0)
-        {
-            Debug.Log($"Logging scores at step {currentStep}");
-            // Log the results
-            envController.LogScores(currentStep, currentLearningTeam);
+    //  void ScoreLogger(int globalCounter)
+    // {
+    //     // Increment step counter
+    //     //currentStep = (Academy.Instance.StepCount / decisionPeriod)*2;
+    //     //int currentStep= Academy.Instance.StepCount;
+    //     //int currentStep= StepCount;
 
-            // Alternate the learning team
-            currentLearningTeam = (currentLearningTeam == "Blue") ? "Purple" : "Blue";
-            envController.SetCurrentLearningTeam(currentLearningTeam);
+    //     // Detect when the learning team changes
+    //     // if (currentStep % teamChangeSteps == 0 && currentStep > 0)
+    //     // {
+    //     //     Debug.Log($"Logging scores at step {currentStep}");
+    //     //     // Log the results
+    //     //     envController.LogScores(currentStep, currentLearningTeam);
 
-            // Reset counters for the new phase
-            envController.ClearGoals();
-        }
+    //     //     // Alternate the learning team
+    //     //     currentLearningTeam = (currentLearningTeam == "Blue") ? "Purple" : "Blue";
+    //     //     envController.SetCurrentLearningTeam(currentLearningTeam);
+
+    //     //     // Reset counters for the new phase
+    //     //     envController.ClearGoals();
+    //     // }
+
+    //     if (globalCounter % teamChangeSteps == 0 && globalCounter > 0)
+    //     {
+    //         Debug.Log($"Logging scores at step {globalCounter}");
+    //         // Log the results
+    //         envController.LogScores(globalCounter, currentLearningTeam);
+
+    //         // Alternate the learning team
+    //         currentLearningTeam = (currentLearningTeam == "Blue") ? "Purple" : "Blue";
+    //         envController.SetCurrentLearningTeam(currentLearningTeam);
+
+    //         // Reset counters for the new phase
+    //         envController.ClearGoals();
+    //     }
+    // }
+void ScoreLogger(int globalCounter)
+{
+    globalCounter++;
+    if (globalCounter % 10000 ==0){
+        Debug.Log ("hit a multiple "+ globalCounter);
     }
+    envController.CheckAndLogScores(globalCounter);
+}
+
     public override void OnActionReceived(ActionBuffers actionBuffers)
 
     {
-
-        ScoreLogger();
+        globalCounter++;
+        ScoreLogger(globalCounter);
 
         if (position == Position.Goalie)
         {
@@ -243,5 +275,4 @@ public class AgentSoccer : Agent
         agentRb.AddForce(dirToGo * m_SoccerSettings.agentRunSpeed,
             ForceMode.VelocityChange);
     }
-
 }

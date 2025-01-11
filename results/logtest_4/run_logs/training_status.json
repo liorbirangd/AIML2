@@ -1,0 +1,30 @@
+{
+    "SoccerTwos": {
+        "elo": 1199.1388999080598,
+        "checkpoints": [
+            {
+                "steps": 22150,
+                "file_path": "results\\logtest_4\\SoccerTwos\\SoccerTwos-22150.onnx",
+                "reward": 0.0,
+                "creation_time": 1736624767.6060169,
+                "auxillary_file_paths": [
+                    "results\\logtest_4\\SoccerTwos\\SoccerTwos-22150.pt"
+                ]
+            }
+        ],
+        "final_checkpoint": {
+            "steps": 22150,
+            "file_path": "results\\logtest_4\\SoccerTwos.onnx",
+            "reward": 0.0,
+            "creation_time": 1736624767.6060169,
+            "auxillary_file_paths": [
+                "results\\logtest_4\\SoccerTwos\\SoccerTwos-22150.pt"
+            ]
+        }
+    },
+    "metadata": {
+        "stats_format_version": "0.3.0",
+        "mlagents_version": "0.28.0",
+        "torch_version": "1.10.0+cpu"
+    }
+}

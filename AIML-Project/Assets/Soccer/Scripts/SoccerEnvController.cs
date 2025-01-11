@@ -50,6 +50,10 @@ public class SoccerEnvController : MonoBehaviour
     private int learningTeamGoals = 0;
     private int opposingTeamGoals = 0;
     private string currentLearningTeam = "Blue";
+    //private bool hasLoggedThisInterval = false;
+    private int lastLoggedStep = 0;
+
+     private int teamChangeSteps = 10000; // Matches the `team_change` parameter in config
 
     void Start()
     {
@@ -77,13 +81,16 @@ public class SoccerEnvController : MonoBehaviour
         ResetScene();
     }
 
-    public void LogScores(int currentStep, string currentLearningTeam)
-    {
-        string logEntry = $"Step {currentStep}: LearningTeam ({currentLearningTeam}) Goals = {learningTeamGoals}, Opponent Goals = {opposingTeamGoals}";
+    // public void LogScores(int currentStep, string currentLearningTeam)
+    // {
+    //     //string logEntry = $"Step {currentStep}: LearningTeam ({currentLearningTeam}) Goals = {learningTeamGoals}, Opponent Goals = {opposingTeamGoals}";
 
-        // Write to file
-        DebugFileLogger.Log(logEntry);
-    }
+    //     // Write to file
+    //     //DebugFileLogger.Log(logEntry);
+    //     GoalLogger.Log(currentStep, learningTeamGoals, opposingTeamGoals,currentLearningTeam);
+    //     //Debug.Log($"{currentStep},{learningTeamGoals},{opposingTeamGoals}");
+    //     Debug.Log($"Interval complete - Learning team {currentLearningTeam}: {learningTeamGoals} goals, Opposing: {opposingTeamGoals} goals");
+    // }
 
     public void ClearGoals() 
     {
@@ -107,6 +114,32 @@ public class SoccerEnvController : MonoBehaviour
         }
     }
 
+    public void CheckAndLogScores(int currentStep)
+    {
+
+        if (currentStep % teamChangeSteps == 0 && 
+            currentStep > 0 && 
+            currentStep != lastLoggedStep)
+        {
+            Debug.Log($"=== Logging scores at step {currentStep} ===");
+            
+            // Log the results
+            GoalLogger.Log(currentStep, learningTeamGoals, opposingTeamGoals, currentLearningTeam);
+            
+            // Alternate the learning team
+            currentLearningTeam = (currentLearningTeam == "Blue") ? "Purple" : "Blue";
+            
+            // Reset counters for the new phase
+            learningTeamGoals = 0;
+            opposingTeamGoals = 0;
+            
+            // Mark this interval as logged
+            lastLoggedStep = currentStep;
+            
+            Debug.Log($"=== Switched to team {currentLearningTeam} for next interval ===");
+        }
+    }
+
     public void ResetBall()
     {
         var randomPosX = Random.Range(-2.5f, 2.5f);
@@ -121,16 +154,18 @@ public class SoccerEnvController : MonoBehaviour
     public void GoalTouched(Team scoredTeam)
     {
 
-        DebugFileLogger.Log($"Goal scored by {scoredTeam} team!");
+        //GoalLogger.Log($"Goal scored by {scoredTeam} team!");
         
         // Increment the appropriate counter based on the current learning team
         if (scoredTeam.ToString() ==  currentLearningTeam)
         {
             learningTeamGoals++;
+            //Debug.Log($"Learning team goal! Total: {learningTeamGoals}");
         }
         else
         {
             opposingTeamGoals++;
+            //Debug.Log($"Opposing team goal! Total: {opposingTeamGoals}");
         }
 
         if (scoredTeam == Team.Blue)

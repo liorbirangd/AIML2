@@ -1,24 +1,24 @@
 {
     "SoccerTwos": {
-        "elo": 1199.0300377879032,
+        "elo": 1198.2952421560537,
         "checkpoints": [
             {
-                "steps": 25038,
-                "file_path": "results\\logtest_1\\SoccerTwos\\SoccerTwos-25038.onnx",
+                "steps": 66618,
+                "file_path": "results\\logtest_1\\SoccerTwos\\SoccerTwos-66618.onnx",
                 "reward": 0.0,
-                "creation_time": 1736607329.7580178,
+                "creation_time": 1736624456.0167599,
                 "auxillary_file_paths": [
-                    "results\\logtest_1\\SoccerTwos\\SoccerTwos-25038.pt"
+                    "results\\logtest_1\\SoccerTwos\\SoccerTwos-66618.pt"
                 ]
             }
         ],
         "final_checkpoint": {
-            "steps": 25038,
+            "steps": 66618,
             "file_path": "results\\logtest_1\\SoccerTwos.onnx",
             "reward": 0.0,
-            "creation_time": 1736607329.7580178,
+            "creation_time": 1736624456.0167599,
             "auxillary_file_paths": [
-                "results\\logtest_1\\SoccerTwos\\SoccerTwos-25038.pt"
+                "results\\logtest_1\\SoccerTwos\\SoccerTwos-66618.pt"
             ]
         }
     },
