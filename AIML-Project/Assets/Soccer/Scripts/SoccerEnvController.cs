@@ -6,11 +6,18 @@ using UnityEngine;
 public class SoccerEnvController : MonoBehaviour
 {
 
-    private int learningTeamGoals = 0;
-    private int opposingTeamGoals = 0;
-    private string currentLearningTeam = "Blue";
+    //private int learningTeamGoals = 0;
+    //private int opposingTeamGoals = 0;
+    //private string currentLearningTeam = "Blue";
+    ////private int teamChangeSteps = 1000; // Matches the `team_change` parameter in config
+    //private int currentStep = 0;
+    //private int previousStep = 0;
+    //private int interval = 0;
+    //private int previousLearningTeamScore = 0;
+    //private int previousOpposingTeamScore = 0;
 
-    //private StreamWriter logFile;
+
+    private StreamWriter logFile;
 
     [System.Serializable]
     public class PlayerInfo
@@ -93,28 +100,47 @@ public class SoccerEnvController : MonoBehaviour
             m_PurpleAgentGroup.GroupEpisodeInterrupted();
             ResetScene();
         }
+
+        //// Increment step counter
+        //previousStep = currentStep;
+        //currentStep = Academy.Instance.StepCount;
+        //DebugFileLogger.Log(currentStep.ToString());
+
+        //// Detect when the learning team changes
+        //if ((previousStep < interval+1000) && (currentStep >= interval +1000))
+        //{
+        //    interval = interval + 1000;
+        //    // Log the results
+        //    LogScores(previousLearningTeamScore,previousOpposingTeamScore);
+
+        //    // Alternate the learning team
+        //    currentLearningTeam = (currentLearningTeam == "Blue") ? "Purple" : "Blue";
+
+        //    // Reset counters for the new phase
+        //    ClearGoals();
+        //}
+        //else if(currentStep > 9990)
+        //{
+        //    LogScores(learningTeamGoals, opposingTeamGoals);
+        //}
+
+        //previousLearningTeamScore = learningTeamGoals; //2
+        //previousOpposingTeamScore = opposingTeamGoals; //1
     }
 
-   
+    //public void LogScores(int learningTeamScore, int opposingTeamScore)
+    //{
+    //    string logEntry = $"Step {currentStep}: LearningTeam ({currentLearningTeam}) Goals = {learningTeamScore}, Opponent Goals = {opposingTeamScore}";
 
-    public void LogScores(int currentStep, string currentLearningTeam)
-    {
-        string logEntry = $"Step {currentStep}: LearningTeam ({currentLearningTeam}) Goals = {learningTeamGoals}, Opponent Goals = {opposingTeamGoals}";
+    //    // Write to file
+    //    DebugFileLogger.Log(logEntry);
+    //}
 
-        // Write to file
-        DebugScoreFileLogger.Log(logEntry);
-    }
-
-    public void ClearGoals() 
-    {
-        learningTeamGoals = 0;
-        opposingTeamGoals = 0;
-    }
-
-    public void SetCurrentLearningTeam(string learningTeam)
-    {
-        currentLearningTeam = learningTeam;
-    }
+    //public void ClearGoals() 
+    //{
+    //    learningTeamGoals = 0;
+    //    opposingTeamGoals = 0;
+    //}
 
 
     public void ResetBall()
@@ -131,17 +157,17 @@ public class SoccerEnvController : MonoBehaviour
 
     public void GoalTouched(Team scoredTeam)
     {
-        DebugFileLogger.Log($"Goal scored by {scoredTeam} team!");
+        //DebugFileLogger.Log($"Goal scored by {scoredTeam} team!");
         
         // Increment the appropriate counter based on the current learning team
-        if (scoredTeam.ToString() ==  currentLearningTeam)
-        {
-            learningTeamGoals++;
-        }
-        else
-        {
-            opposingTeamGoals++;
-        }
+        //if (scoredTeam.ToString() ==  currentLearningTeam)
+        //{
+        //    learningTeamGoals++;
+        //}
+        //else
+        //{
+        //    opposingTeamGoals++;
+        //}
 
         var ballController = ball.GetComponent<SoccerBallController>();
         if (scoredTeam == Team.Blue)
@@ -149,14 +175,14 @@ public class SoccerEnvController : MonoBehaviour
             // Reward Blue Team
             m_BlueAgentGroup.AddGroupReward(2.0f); // Group reward for scoring
             m_PurpleAgentGroup.AddGroupReward(-1.0f); // Penalty for the opposing team
-            DebugFileLogger.Log("Blue team rewarded.");
+            //DebugFileLogger.Log("Blue team rewarded.");
             //DebugFileLogger.Log($"{ballController.lastToucher.GetComponent<AgentSoccer>().name} scored!");
 
             // Reward the scoring agent
             if (ballController.lastToucher != null)
             {
                 var scorerAgent = ballController.lastToucher.GetComponent<AgentSoccer>();
-                DebugFileLogger.Log($"{scorerAgent.name} scored!");
+                //DebugFileLogger.Log($"{scorerAgent.name} scored!");
 
                 // Ensure the scorer is from the blue team
                 if (scorerAgent != null)
@@ -164,11 +190,11 @@ public class SoccerEnvController : MonoBehaviour
                     if (scorerAgent.team == Team.Blue)
                     {
                         scorerAgent.AddReward(0.2f); // Scoring Reward
-                        DebugFileLogger.Log($"{scorerAgent.name} rewarded for scoring!");
+                        //DebugFileLogger.Log($"{scorerAgent.name} rewarded for scoring!");
                     }
                     else if (scorerAgent.team == Team.Purple) {
                         scorerAgent.AddReward(-0.2f); // Scoring Penalty
-                        DebugFileLogger.Log($"{scorerAgent.name} penalized for scoring!");
+                        //DebugFileLogger.Log($"{scorerAgent.name} penalized for scoring!");
                     }
                 }
             }
@@ -178,14 +204,14 @@ public class SoccerEnvController : MonoBehaviour
             // Reward Purple Team
             m_PurpleAgentGroup.AddGroupReward(2.0f); // Group reward for scoring
             m_BlueAgentGroup.AddGroupReward(-1.0f); // Penalty for the opposing team
-            DebugFileLogger.Log("Purple team rewarded.");
+            //DebugFileLogger.Log("Purple team rewarded.");
             //DebugFileLogger.Log($"{ballController.lastToucher.GetComponent<AgentSoccer>().name} scored!");
 
             // Reward the scoring agent
             if (ballController.lastToucher != null)
             {
                 var scorerAgent = ballController.lastToucher.GetComponent<AgentSoccer>();
-                DebugFileLogger.Log($"{scorerAgent.name} scored!");
+                //DebugFileLogger.Log($"{scorerAgent.name} scored!");
 
                 // Ensure the scorer is from the purple team
                 if (scorerAgent != null)
@@ -193,12 +219,12 @@ public class SoccerEnvController : MonoBehaviour
                     if (scorerAgent.team == Team.Purple)
                     {
                         scorerAgent.AddReward(0.2f); // Scoring Reward
-                        DebugFileLogger.Log($"{scorerAgent.name} rewarded for scoring!");
+                        //DebugFileLogger.Log($"{scorerAgent.name} rewarded for scoring!");
                     }
                     else if (scorerAgent.team == Team.Blue)
                     {
                         scorerAgent.AddReward(-0.2f); // Scoring Penalty
-                        DebugFileLogger.Log($"{scorerAgent.name} penalized for scoring!");
+                        //DebugFileLogger.Log($"{scorerAgent.name} penalized for scoring!");
                     }
                 }
             }

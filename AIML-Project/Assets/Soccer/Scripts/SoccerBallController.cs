@@ -42,7 +42,7 @@ public class SoccerBallController : MonoBehaviour
 
             // Update the last toucher to the current agent
             lastToucher = col.gameObject;
-            DebugFileLogger.Log($"Last toucher updated: {lastToucher.name}");
+            //DebugFileLogger.Log($"Last toucher updated: {lastToucher.name}");
         }
 
         if (col.gameObject.CompareTag(purpleGoalTag)) // Ball touched purple goal

@@ -25,10 +25,10 @@ public class AgentSoccer : Agent
     // * own teammate
     // * opposing player
 
-    private int teamChangeSteps = 200000; // Matches the `team_change` parameter in config
-    private int currentStep = 0;
+    //private int teamChangeSteps = 1000; // Matches the `team_change` parameter in config
+    //private int currentStep = 0;
 
-    private string currentLearningTeam = "Blue"; // Initial learning team
+    //private string currentLearningTeam = "Blue"; // Initial learning team
 
     public enum Position
     {
@@ -120,28 +120,28 @@ public class AgentSoccer : Agent
         awarenessSystem = GetComponentInChildren<AwarenessSystem>();
     }
 
-    void ScoreLogger()
-    {
-        // Increment step counter
-        currentStep = Academy.Instance.StepCount;
-        // Detect when the learning team changes
-        if (currentStep % teamChangeSteps == 0 && currentStep > 0)
-        {
-            // Log the results
-            envController.LogScores(currentStep, currentLearningTeam);
+    //void ScoreLogger()
+    //{
+    //    // Increment step counter
+    //    currentStep = Academy.Instance.StepCount;
+    //    // Detect when the learning team changes
+    //    if (currentStep % teamChangeSteps == 0 && currentStep > 0)
+    //    {
+    //        // Log the results
+    //        envController.LogScores(currentStep, currentLearningTeam);
 
-            // Alternate the learning team
-            currentLearningTeam = (currentLearningTeam == "Blue") ? "Purple" : "Blue";
-            envController.SetCurrentLearningTeam(currentLearningTeam);
+    //        // Alternate the learning team
+    //        currentLearningTeam = (currentLearningTeam == "Blue") ? "Purple" : "Blue";
+    //        envController.SetCurrentLearningTeam(currentLearningTeam);
 
-            // Reset counters for the new phase
-            envController.ClearGoals();
-        }
-    }
+    //        // Reset counters for the new phase
+    //        envController.ClearGoals();
+    //    }
+    //}
 
     public override void OnActionReceived(ActionBuffers actionBuffers)
     {
-        ScoreLogger();
+        //ScoreLogger();
 
         if (position == Position.Goalie)
         {
@@ -264,7 +264,7 @@ public class AgentSoccer : Agent
         if (c.gameObject.CompareTag("ball"))
         {
             AddReward(.2f * m_BallTouch);
-            DebugFileLogger.Log("Agent Touch Reward.");
+            //DebugFileLogger.Log("Agent Touch Reward.");
 
             // Apply force to the ball
             var ballRb = c.gameObject.GetComponent<Rigidbody>();
@@ -293,52 +293,52 @@ public class AgentSoccer : Agent
         float rayDistance = 40f;
 
         // Check if the ball was heading toward the goal before contact
-        DebugFileLogger.Log($"       Block Check...");
-        DebugFileLogger.Log($"Before contact, the ball: ");
+        //DebugFileLogger.Log($"       Block Check...");
+        //DebugFileLogger.Log($"Before contact, the ball: ");
         bool wasHeadingToGoal = IsBallHeadingTowardsGoal(preContactVelocity, ball.transform.position, ownGoalTag, rayDistance);
-        DebugFileLogger.Log($"so wasHeadingTowardGoal: {wasHeadingToGoal}");
+        //DebugFileLogger.Log($"so wasHeadingTowardGoal: {wasHeadingToGoal}");
 
         if (wasHeadingToGoal)
         {
-            DebugFileLogger.Log($"After contact, the ball: ");
+            //DebugFileLogger.Log($"After contact, the ball: ");
             Vector3 postContactVelocity = ballRb.velocity.normalized; // Get updated velocity
             bool isHeadingAwayFromGoal = !IsBallHeadingTowardsGoal(postContactVelocity, ball.transform.position, ownGoalTag, rayDistance);
-            DebugFileLogger.Log($"so isHeadingAwayFromGoal: {isHeadingAwayFromGoal}");
+            //DebugFileLogger.Log($"so isHeadingAwayFromGoal: {isHeadingAwayFromGoal}");
 
             // Reward for blocking a potential goal
             if (isHeadingAwayFromGoal)
             {
                 AddReward(0.5f); // Reward for blocking
-                DebugFileLogger.Log("Reward for blocking a potential goal.");
+                //DebugFileLogger.Log("Reward for blocking a potential goal.");
             }
             else
             {
-                DebugFileLogger.Log("Ball wasn't blocked successfully.");
+                //DebugFileLogger.Log("Ball wasn't blocked successfully.");
             }
         }
-        else
-        {
-            DebugFileLogger.Log("Since false, no further check needed.");
-        }
+        //else
+        //{
+        //    DebugFileLogger.Log("Since false, no further check needed.");
+        //}
 
-        DebugFileLogger.Log($"       Kick Direction Check...");
+        //DebugFileLogger.Log($"       Kick Direction Check...");
         // Check if the ball is heading toward the opponent's goal
-        Vector3 postContactVelocityCheck = ballRb.velocity.normalized; // Recheck velocity
-        DebugFileLogger.Log($"After Kicking the ball: ");
-        if (IsBallHeadingTowardsGoal(postContactVelocityCheck, ball.transform.position, opponentGoalTag, rayDistance))
-        {
-            AddReward(0.2f); // Reward for kicking toward opponent's goal
-            DebugFileLogger.Log("Reward for kicking toward opponent's goal area.");
-        }
-        else if (IsBallHeadingTowardsGoal(postContactVelocityCheck, ball.transform.position, ownGoalTag, 25f))
-        {
-            AddReward(-0.2f); // Penalty for kicking toward own goal
-            DebugFileLogger.Log("Penalty for kicking toward own goal.");
-        }
-        else
-        {
-            DebugFileLogger.Log("No penalty or reward as kick direction is neutral.");
-        }
+        //Vector3 postContactVelocityCheck = ballRb.velocity.normalized; // Recheck velocity
+        ////DebugFileLogger.Log($"After Kicking the ball: ");
+        //if (IsBallHeadingTowardsGoal(postContactVelocityCheck, ball.transform.position, opponentGoalTag, rayDistance))
+        //{
+        //    AddReward(0.2f); // Reward for kicking toward opponent's goal
+        //    //DebugFileLogger.Log("Reward for kicking toward opponent's goal area.");
+        //}
+        //else if (IsBallHeadingTowardsGoal(postContactVelocityCheck, ball.transform.position, ownGoalTag, 25f))
+        //{
+        //    AddReward(-0.2f); // Penalty for kicking toward own goal
+        //    //DebugFileLogger.Log("Penalty for kicking toward own goal.");
+        //}
+        //else
+        //{
+        //    //DebugFileLogger.Log("No penalty or reward as kick direction is neutral.");
+        //}
     }
 
     private bool IsBallHeadingTowardsGoal(Vector3 ballDirection, Vector3 ballPosition, String goalTag, float rayDistance)
@@ -353,11 +353,11 @@ public class AgentSoccer : Agent
             // Optional: Check if the ray hits the target
             if (hit.transform.CompareTag(goalTag))
             {
-                DebugFileLogger.Log("was moving towards goal");
+                //DebugFileLogger.Log("was moving towards goal");
                 return true; // Moving towards and ray hits target
             }
         }
-        DebugFileLogger.Log("was not moving towards goal");
+        //DebugFileLogger.Log("was not moving towards goal");
         return false; // Moving towards based on direction
     }
 
