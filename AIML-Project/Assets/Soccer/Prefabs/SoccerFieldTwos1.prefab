@@ -3074,7 +3074,6 @@ MonoBehaviour:
   purpleGoalTag: purpleGoal
   blueGoalTag: blueGoal
   lastToucher: {fileID: 0}
-  assistAgent: {fileID: 0}
   previousBallWasMoving: 0
 --- !u!54 &54100138833592438
 Rigidbody:
@@ -5299,6 +5298,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1831789531847717416, guid: f2ecc5443237b304d91c0b719ad34c21,
         type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1831789531847717416, guid: f2ecc5443237b304d91c0b719ad34c21,
+        type: 3}
       propertyPath: m_TagString
       value: blueAgent
       objectReference: {fileID: 0}
@@ -5467,6 +5471,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1831789531847717416, guid: f2ecc5443237b304d91c0b719ad34c21,
         type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1831789531847717416, guid: f2ecc5443237b304d91c0b719ad34c21,
+        type: 3}
       propertyPath: m_TagString
       value: purpleAgent
       objectReference: {fileID: 0}
@@ -5508,6 +5517,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Hearing_Sensor
+      objectReference: {fileID: 0}
+    - target: {fileID: 4821656446974766886, guid: 76b114a3176bb834c96e5311cbd5aacf,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5816553209542207618, guid: 76b114a3176bb834c96e5311cbd5aacf,
         type: 3}
@@ -5586,7 +5600,7 @@ PrefabInstance:
     - target: {fileID: 4821656446974766886, guid: 76b114a3176bb834c96e5311cbd5aacf,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5816553209542207618, guid: 76b114a3176bb834c96e5311cbd5aacf,
         type: 3}
@@ -5661,6 +5675,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Hearing_Sensor
+      objectReference: {fileID: 0}
+    - target: {fileID: 4821656446974766886, guid: 76b114a3176bb834c96e5311cbd5aacf,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5816553209542207618, guid: 76b114a3176bb834c96e5311cbd5aacf,
         type: 3}
@@ -5859,6 +5878,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Awarness_sensor
+      objectReference: {fileID: 0}
+    - target: {fileID: 1831789531847717416, guid: f2ecc5443237b304d91c0b719ad34c21,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1831789531847717416, guid: f2ecc5443237b304d91c0b719ad34c21,
         type: 3}
@@ -6324,6 +6348,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Awarness_sensor
       objectReference: {fileID: 0}
+    - target: {fileID: 1831789531847717416, guid: f2ecc5443237b304d91c0b719ad34c21,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1881710761204778299, guid: f2ecc5443237b304d91c0b719ad34c21,
         type: 3}
       propertyPath: detectableTargetManager
@@ -6362,6 +6391,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Hearing_Sensor
+      objectReference: {fileID: 0}
+    - target: {fileID: 4821656446974766886, guid: 76b114a3176bb834c96e5311cbd5aacf,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4821656446974766886, guid: 76b114a3176bb834c96e5311cbd5aacf,
         type: 3}
