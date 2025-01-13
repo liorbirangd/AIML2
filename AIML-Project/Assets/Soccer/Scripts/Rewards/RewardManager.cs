@@ -11,5 +11,13 @@ namespace Soccer.Scripts.Rewards
         public UnityEvent<Team,Vector3> OnBallPositioningCheck;
         public UnityEvent OnBallTouched;
         public UnityEvent<Vector3,Rigidbody,GameObject> OnKickDirectionCheck;
+
+        public RewardManager()
+        {
+            OnActionedPerformed = new UnityEvent<Position>();
+            OnBallPositioningCheck = new UnityEvent<Team,Vector3>();
+            OnBallTouched = new UnityEvent();
+            OnKickDirectionCheck = new UnityEvent<Vector3,Rigidbody,GameObject>();
+        }
     }
 }
