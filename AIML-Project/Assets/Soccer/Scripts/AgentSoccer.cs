@@ -263,7 +263,7 @@ public class AgentSoccer : Agent
 
         if (c.gameObject.CompareTag("ball"))
         {
-            AddReward(.2f * m_BallTouch);
+            AddReward(0.05f);
             //DebugFileLogger.Log("Agent Touch Reward.");
 
             // Apply force to the ball
@@ -276,90 +276,90 @@ public class AgentSoccer : Agent
             ballRb.AddForce(dirToBall * force); // Apply force
 
             // Call the delayed reward check
-            StartCoroutine(DelayedRewardCheck(preContactVelocity, ballRb, c.gameObject));
+            //StartCoroutine(DelayedRewardCheck(preContactVelocity, ballRb, c.gameObject));
 
             // Emit sound event
-            awarenessSystem.hearingManager.OnSoundEmitted(gameObject, transform.position, EHeardSoundCategory.EKick, 3f);
+            // awarenessSystem.hearingManager.OnSoundEmitted(gameObject, transform.position, EHeardSoundCategory.EKick, 3f);
         }
     }
 
-    private IEnumerator DelayedRewardCheck(Vector3 preContactVelocity, Rigidbody ballRb, GameObject ball)
-    {
-        yield return new WaitForFixedUpdate(); // Wait for the physics system to update the velocity
+    //private IEnumerator DelayedRewardCheck(Vector3 preContactVelocity, Rigidbody ballRb, GameObject ball)
+    //{
+    //    yield return new WaitForFixedUpdate(); // Wait for the physics system to update the velocity
 
-        // Determine goal tags
-        String ownGoalTag = team == Team.Blue ? "blueGoal" : "purpleGoal";
-        String opponentGoalTag = team == Team.Blue ? "purpleGoal" : "blueGoal";
-        float rayDistance = 40f;
+    //    // Determine goal tags
+    //    String ownGoalTag = team == Team.Blue ? "blueGoal" : "purpleGoal";
+    //    String opponentGoalTag = team == Team.Blue ? "purpleGoal" : "blueGoal";
+    //    float rayDistance = 40f;
 
-        // Check if the ball was heading toward the goal before contact
-        //DebugFileLogger.Log($"       Block Check...");
-        //DebugFileLogger.Log($"Before contact, the ball: ");
-        bool wasHeadingToGoal = IsBallHeadingTowardsGoal(preContactVelocity, ball.transform.position, ownGoalTag, rayDistance);
-        //DebugFileLogger.Log($"so wasHeadingTowardGoal: {wasHeadingToGoal}");
+    //    // Check if the ball was heading toward the goal before contact
+    //    //DebugFileLogger.Log($"       Block Check...");
+    //    //DebugFileLogger.Log($"Before contact, the ball: ");
+    //    bool wasHeadingToGoal = IsBallHeadingTowardsGoal(preContactVelocity, ball.transform.position, ownGoalTag, rayDistance);
+    //    //DebugFileLogger.Log($"so wasHeadingTowardGoal: {wasHeadingToGoal}");
 
-        if (wasHeadingToGoal)
-        {
-            //DebugFileLogger.Log($"After contact, the ball: ");
-            Vector3 postContactVelocity = ballRb.velocity.normalized; // Get updated velocity
-            bool isHeadingAwayFromGoal = !IsBallHeadingTowardsGoal(postContactVelocity, ball.transform.position, ownGoalTag, rayDistance);
-            //DebugFileLogger.Log($"so isHeadingAwayFromGoal: {isHeadingAwayFromGoal}");
+    //    if (wasHeadingToGoal)
+    //    {
+    //        //DebugFileLogger.Log($"After contact, the ball: ");
+    //        Vector3 postContactVelocity = ballRb.velocity.normalized; // Get updated velocity
+    //        bool isHeadingAwayFromGoal = !IsBallHeadingTowardsGoal(postContactVelocity, ball.transform.position, ownGoalTag, rayDistance);
+    //        //DebugFileLogger.Log($"so isHeadingAwayFromGoal: {isHeadingAwayFromGoal}");
 
-            // Reward for blocking a potential goal
-            if (isHeadingAwayFromGoal)
-            {
-                AddReward(0.5f); // Reward for blocking
-                //DebugFileLogger.Log("Reward for blocking a potential goal.");
-            }
-            else
-            {
-                //DebugFileLogger.Log("Ball wasn't blocked successfully.");
-            }
-        }
-        //else
-        //{
-        //    DebugFileLogger.Log("Since false, no further check needed.");
-        //}
+    //        // Reward for blocking a potential goal
+    //        if (isHeadingAwayFromGoal)
+    //        {
+    //            AddReward(0.5f); // Reward for blocking
+    //            //DebugFileLogger.Log("Reward for blocking a potential goal.");
+    //        }
+    //        else
+    //        {
+    //            //DebugFileLogger.Log("Ball wasn't blocked successfully.");
+    //        }
+    //    }
+    //    //else
+    //    //{
+    //    //    DebugFileLogger.Log("Since false, no further check needed.");
+    //    //}
 
-        //DebugFileLogger.Log($"       Kick Direction Check...");
-        // Check if the ball is heading toward the opponent's goal
-        //Vector3 postContactVelocityCheck = ballRb.velocity.normalized; // Recheck velocity
-        ////DebugFileLogger.Log($"After Kicking the ball: ");
-        //if (IsBallHeadingTowardsGoal(postContactVelocityCheck, ball.transform.position, opponentGoalTag, rayDistance))
-        //{
-        //    AddReward(0.2f); // Reward for kicking toward opponent's goal
-        //    //DebugFileLogger.Log("Reward for kicking toward opponent's goal area.");
-        //}
-        //else if (IsBallHeadingTowardsGoal(postContactVelocityCheck, ball.transform.position, ownGoalTag, 25f))
-        //{
-        //    AddReward(-0.2f); // Penalty for kicking toward own goal
-        //    //DebugFileLogger.Log("Penalty for kicking toward own goal.");
-        //}
-        //else
-        //{
-        //    //DebugFileLogger.Log("No penalty or reward as kick direction is neutral.");
-        //}
-    }
+    //    //DebugFileLogger.Log($"       Kick Direction Check...");
+    //    // Check if the ball is heading toward the opponent's goal
+    //    //Vector3 postContactVelocityCheck = ballRb.velocity.normalized; // Recheck velocity
+    //    ////DebugFileLogger.Log($"After Kicking the ball: ");
+    //    //if (IsBallHeadingTowardsGoal(postContactVelocityCheck, ball.transform.position, opponentGoalTag, rayDistance))
+    //    //{
+    //    //    AddReward(0.2f); // Reward for kicking toward opponent's goal
+    //    //    //DebugFileLogger.Log("Reward for kicking toward opponent's goal area.");
+    //    //}
+    //    //else if (IsBallHeadingTowardsGoal(postContactVelocityCheck, ball.transform.position, ownGoalTag, 25f))
+    //    //{
+    //    //    AddReward(-0.2f); // Penalty for kicking toward own goal
+    //    //    //DebugFileLogger.Log("Penalty for kicking toward own goal.");
+    //    //}
+    //    //else
+    //    //{
+    //    //    //DebugFileLogger.Log("No penalty or reward as kick direction is neutral.");
+    //    //}
+    //}
 
-    private bool IsBallHeadingTowardsGoal(Vector3 ballDirection, Vector3 ballPosition, String goalTag, float rayDistance)
-    {
-        LayerMask targetLayer;
-        targetLayer = LayerMask.GetMask("Goal");
+    //private bool IsBallHeadingTowardsGoal(Vector3 ballDirection, Vector3 ballPosition, String goalTag, float rayDistance)
+    //{
+    //    LayerMask targetLayer;
+    //    targetLayer = LayerMask.GetMask("Goal");
 
-        // Perform a raycast in the direction of the velocity
-        Ray ray = new Ray(ballPosition, ballDirection);
-        if (Physics.Raycast(ray, out RaycastHit hit, rayDistance, targetLayer))
-        {
-            // Optional: Check if the ray hits the target
-            if (hit.transform.CompareTag(goalTag))
-            {
-                //DebugFileLogger.Log("was moving towards goal");
-                return true; // Moving towards and ray hits target
-            }
-        }
-        //DebugFileLogger.Log("was not moving towards goal");
-        return false; // Moving towards based on direction
-    }
+    //    // Perform a raycast in the direction of the velocity
+    //    Ray ray = new Ray(ballPosition, ballDirection);
+    //    if (Physics.Raycast(ray, out RaycastHit hit, rayDistance, targetLayer))
+    //    {
+    //        // Optional: Check if the ray hits the target
+    //        if (hit.transform.CompareTag(goalTag))
+    //        {
+    //            //DebugFileLogger.Log("was moving towards goal");
+    //            return true; // Moving towards and ray hits target
+    //        }
+    //    }
+    //    //DebugFileLogger.Log("was not moving towards goal");
+    //    return false; // Moving towards based on direction
+    //}
 
 
     public override void CollectObservations(VectorSensor sensor)

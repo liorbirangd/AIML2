@@ -174,7 +174,7 @@ public class SoccerEnvController : MonoBehaviour
         {
             // Reward Blue Team
             m_BlueAgentGroup.AddGroupReward(2.0f); // Group reward for scoring
-            m_PurpleAgentGroup.AddGroupReward(-1.0f); // Penalty for the opposing team
+            m_PurpleAgentGroup.AddGroupReward(-2.0f); // Penalty for the opposing team
             //DebugFileLogger.Log("Blue team rewarded.");
             //DebugFileLogger.Log($"{ballController.lastToucher.GetComponent<AgentSoccer>().name} scored!");
 
@@ -203,7 +203,7 @@ public class SoccerEnvController : MonoBehaviour
         {
             // Reward Purple Team
             m_PurpleAgentGroup.AddGroupReward(2.0f); // Group reward for scoring
-            m_BlueAgentGroup.AddGroupReward(-1.0f); // Penalty for the opposing team
+            m_BlueAgentGroup.AddGroupReward(-2.0f); // Penalty for the opposing team
             //DebugFileLogger.Log("Purple team rewarded.");
             //DebugFileLogger.Log($"{ballController.lastToucher.GetComponent<AgentSoccer>().name} scored!");
 
