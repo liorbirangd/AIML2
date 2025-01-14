@@ -77,18 +77,18 @@ public class AgentSoccer : Agent, IRewardableAgent
 
         if (position == Position.Goalie)
         {
-            m_LateralSpeed = 0.5f;
-            m_ForwardSpeed = 0.5f;
+            m_LateralSpeed = 1.0f;
+            m_ForwardSpeed = 1.0f;
         }
         else if (position == Position.Striker)
         {
             m_LateralSpeed = 0.3f;
-            m_ForwardSpeed = 0.6f;
+            m_ForwardSpeed = 1.3f;
         }
         else
         {
-            m_LateralSpeed = 0.2f;
-            m_ForwardSpeed = 0.5f;
+            m_LateralSpeed = 0.3f;
+            m_ForwardSpeed = 1.0f;
         }
 
         m_SoccerSettings = FindObjectOfType<SoccerSettings>();
