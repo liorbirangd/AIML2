@@ -19,10 +19,10 @@ namespace Soccer.Scripts.Rewards
             switch (position)
             {
                 case Position.Striker:
-                    reward = existentialValue;
+                    reward = -existentialValue;
                     break;
                 case Position.Goalie:
-                    reward = -existentialValue;
+                    reward = existentialValue;
                     break;
                 default:
                     reward = 0;

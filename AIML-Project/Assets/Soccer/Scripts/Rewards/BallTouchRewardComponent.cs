@@ -13,9 +13,8 @@ namespace Soccer.Scripts.Rewards
 
         public void addReward()
         {
-            //AddReward(.2f * m_BallTouch);
             agent.addReward(BALL_TOUCH_REWARD);
-            DebugFileLogger.Log("Agent Touch Reward.");
+            //DebugFileLogger.Log("Agent Touch Reward.");
         }
     }
 }

@@ -124,7 +124,6 @@ public class AgentSoccer : Agent, IRewardableAgent
                 positionalRewardStepCounter = 0; // Reset counter
             }
         }
-
         MoveAgent(actionBuffers.DiscreteActions);
     }
 
