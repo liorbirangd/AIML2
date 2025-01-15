@@ -10,4 +10,13 @@ purpleStriker1AwarenessSystem=off
 purpleStriker2HearingSensor=off
 purpleStriker2AwarenessSystem=off
 runExperiment=false
+<<<<<<< Updated upstream
 numberOfGames=5
+=======
+numberOfGames=5
+existentialReward=true
+ballPositionReward=false
+ballTouchReward=true
+blockingReward=true
+kickDirectionReward=true
+>>>>>>> Stashed changes

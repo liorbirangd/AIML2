@@ -8,21 +8,40 @@ public class ExperimentConfig : MonoBehaviour
     public GameObject _activator;
     public GameObject _experiment;
 
+<<<<<<< Updated upstream
+=======
+    private Activator activator;
+    private Experiment experiment;
+
+>>>>>>> Stashed changes
     private string file = "Assets\\Soccer\\Scripts\\Experiments\\Configuration.txt";
 
     private bool useConfig;
     private bool runExperiment;
     private string[] sensorSettings = new string[10];
     private int numberOfGames;
+<<<<<<< Updated upstream
+=======
+    private bool[] rewardsSettings = new bool[5];
+>>>>>>> Stashed changes
 
     // Start is called before the first frame update
     void Start()
     {
         ReadConfigFile();
         TestConfig();
+<<<<<<< Updated upstream
         if (useConfig)
         {
             SetSensors();
+=======
+        activator = _activator.GetComponent<Activator>();
+        experiment = _experiment.GetComponent<Experiment>();
+        if (useConfig)
+        {
+            SetSensors();
+            SetRewards();
+>>>>>>> Stashed changes
             if (runExperiment) StartExperiment();
         }
     }
@@ -57,6 +76,12 @@ public class ExperimentConfig : MonoBehaviour
             case 12:
                 numberOfGames = GetConfigInt(line);
                 break;
+<<<<<<< Updated upstream
+=======
+            case < 18:
+                rewardsSettings[count-13] = GetConfigBool(line);
+                break;
+>>>>>>> Stashed changes
         }
     }
 
@@ -89,7 +114,11 @@ public class ExperimentConfig : MonoBehaviour
 
     private void SetSensors()
     {
+<<<<<<< Updated upstream
         Activator activator = _activator.GetComponent<Activator>();
+=======
+        //Activator activator = _activator.GetComponent<Activator>();
+>>>>>>> Stashed changes
         if (sensorSettings[0] != null) activator.ActivateAllHearingSensors(sensorSettings[0]);
         if (sensorSettings[1] != null) activator.ActivateAllAwarenessSystem(sensorSettings[1]);
         activator.ActivateBlueStriker1Sensors(sensorSettings[2], sensorSettings[3]);
@@ -98,9 +127,20 @@ public class ExperimentConfig : MonoBehaviour
         activator.ActivatePurpleStriker2Sensors(sensorSettings[8], sensorSettings[9]);
     }
 
+<<<<<<< Updated upstream
     private void StartExperiment()
     {
         Experiment experiment = _experiment.GetComponent<Experiment>();
+=======
+    private void SetRewards()
+    {
+        activator.ActivateRewards(rewardsSettings);
+    }
+
+    private void StartExperiment()
+    {
+        //Experiment experiment = _experiment.GetComponent<Experiment>();
+>>>>>>> Stashed changes
         experiment.StartExperiment(numberOfGames);
     }
 }

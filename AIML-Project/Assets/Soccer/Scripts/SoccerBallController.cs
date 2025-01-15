@@ -10,6 +10,8 @@ public class SoccerBallController : MonoBehaviour
 
     private Experiment experiment;
 
+    private Experiment experiment;
+
     void Start()
     {
         envController = area.GetComponent<SoccerEnvController>();
