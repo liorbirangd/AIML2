@@ -1,10 +1,13 @@
 using System.Collections.Generic;
+using System.IO;
 using Soccer.Scripts.Enums;
 using Unity.MLAgents;
 using UnityEngine;
 
 public class SoccerEnvController : MonoBehaviour
 {
+    private StreamWriter logFile;
+
     [System.Serializable]
     public class PlayerInfo
     {
@@ -88,7 +91,6 @@ public class SoccerEnvController : MonoBehaviour
         }
     }
 
-
     public void ResetBall()
     {
         var randomPosX = Random.Range(-2.5f, 2.5f);
@@ -97,63 +99,67 @@ public class SoccerEnvController : MonoBehaviour
         ball.transform.position = m_BallStartingPos + new Vector3(randomPosX, 0f, randomPosZ);
         ballRb.velocity = Vector3.zero;
         ballRb.angularVelocity = Vector3.zero;
-
     }
+
 
     public void GoalTouched(Team scoredTeam)
     {
-        DebugFileLogger.Log($"Goal scored by {scoredTeam} team!");
-
         var ballController = ball.GetComponent<SoccerBallController>();
         if (scoredTeam == Team.Blue)
         {
             // Reward Blue Team
             m_BlueAgentGroup.AddGroupReward(2.0f); // Group reward for scoring
-            m_PurpleAgentGroup.AddGroupReward(-0.5f); // Penalty for the opposing team
-            DebugFileLogger.Log("Blue team rewarded.");
-            //DebugFileLogger.Log($"{ballController.lastToucher.GetComponent<AgentSoccer>().name} scored!");
-
-            // Reward the assist agent (if any)
-            if (ballController.assistAgent != null && ballController.previousBallWasMoving && ballController.lastToucher != null)
+            m_PurpleAgentGroup.AddGroupReward(-2.0f); // Penalty for the opposing team
+            
+            // Reward the scoring agent
+            if (ballController.lastToucher != null)
             {
                 var scorerAgent = ballController.lastToucher.GetComponent<AgentSoccer>();
-                var assistAgent = ballController.assistAgent.GetComponent<AgentSoccer>();
-                DebugFileLogger.Log($"{scorerAgent.name} scored!");
-                DebugFileLogger.Log($"{assistAgent.name} assisted a score!");
+                //DebugFileLogger.Log($"{scorerAgent.name} scored!");
 
-                // Ensure the scorer and assist agent are on the same team
-                if (scorerAgent != null && assistAgent != null && scorerAgent.team == Team.Blue && assistAgent.team == Team.Blue)
+                // Ensure the scorer is from the blue team
+                if (scorerAgent != null)
                 {
-                    assistAgent.AddReward(0.2f); // Assist reward
-                    DebugFileLogger.Log($"{assistAgent.name} rewarded for assist!");
+                    if (scorerAgent.team == Team.Blue)
+                    {
+                        scorerAgent.AddReward(0.2f); // Scoring Reward
+                        //DebugFileLogger.Log($"{scorerAgent.name} rewarded for scoring!");
+                    }
+                    else if (scorerAgent.team == Team.Purple) {
+                        scorerAgent.AddReward(-0.2f); // Scoring Penalty
+                        //DebugFileLogger.Log($"{scorerAgent.name} penalized for scoring!");
+                    }
                 }
             }
         }
         else
         {
             // Reward Purple Team
-            m_PurpleAgentGroup.AddGroupReward(1.0f); // Group reward for scoring
-            m_BlueAgentGroup.AddGroupReward(-0.5f); // Penalty for the opposing team
-            DebugFileLogger.Log("Purple team rewarded.");
-            //DebugFileLogger.Log($"{ballController.lastToucher.GetComponent<AgentSoccer>().name} scored!");
-
-            // Reward the assist agent (if any)
-            if (ballController.assistAgent != null && ballController.previousBallWasMoving && ballController.lastToucher != null)
+            m_PurpleAgentGroup.AddGroupReward(2.0f); // Group reward for scoring
+            m_BlueAgentGroup.AddGroupReward(-2.0f); // Penalty for the opposing team
+          
+            // Reward the scoring agent
+            if (ballController.lastToucher != null)
             {
                 var scorerAgent = ballController.lastToucher.GetComponent<AgentSoccer>();
-                var assistAgent = ballController.assistAgent.GetComponent<AgentSoccer>();
-                DebugFileLogger.Log($"{scorerAgent.name} scored!");
-                DebugFileLogger.Log($"{assistAgent.name} assisted a score!");
+                //DebugFileLogger.Log($"{scorerAgent.name} scored!");
 
-                // Ensure the scorer and assist agent are on the same team
-                if (scorerAgent != null && assistAgent != null && scorerAgent.team == Team.Purple && assistAgent.team == Team.Purple)
+                // Ensure the scorer is from the purple team
+                if (scorerAgent != null)
                 {
-                    assistAgent.AddReward(0.2f); // Assist reward
-                    DebugFileLogger.Log($"{assistAgent.name} rewarded for assist!");
+                    if (scorerAgent.team == Team.Purple)
+                    {
+                        scorerAgent.AddReward(0.2f); // Scoring Reward
+                        //DebugFileLogger.Log($"{scorerAgent.name} rewarded for scoring!");
+                    }
+                    else if (scorerAgent.team == Team.Blue)
+                    {
+                        scorerAgent.AddReward(-0.2f); // Scoring Penalty
+                        //DebugFileLogger.Log($"{scorerAgent.name} penalized for scoring!");
+                    }
                 }
             }
         }
-
         // End the episode and reset the scene
         m_PurpleAgentGroup.EndGroupEpisode();
         m_BlueAgentGroup.EndGroupEpisode();
@@ -164,7 +170,6 @@ public class SoccerEnvController : MonoBehaviour
     public void ResetScene()
     {
         m_ResetTimer = 0;
-
         //Reset Agents
         foreach (var item in AgentsList)
         {
