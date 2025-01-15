@@ -1,5 +1,5 @@
 behaviors:
-  SoccerTwos_POCA:
+  SoccerTwos:
     trainer_type: poca
     hyperparameters:
       batch_size: 2048

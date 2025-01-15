@@ -1,0 +1,66 @@
+{
+    "SoccerTwos": {
+        "checkpoints": [
+            {
+                "steps": 5999716,
+                "file_path": "results\\test-refactor-poca\\SoccerTwos\\SoccerTwos-5999716.onnx",
+                "reward": -0.10726667443911235,
+                "creation_time": 1736917167.932483,
+                "auxillary_file_paths": [
+                    "results\\test-refactor-poca\\SoccerTwos\\SoccerTwos-5999716.pt"
+                ]
+            },
+            {
+                "steps": 6499312,
+                "file_path": "results\\test-refactor-poca\\SoccerTwos\\SoccerTwos-6499312.onnx",
+                "reward": 0.07432973764937471,
+                "creation_time": 1736920728.3158405,
+                "auxillary_file_paths": [
+                    "results\\test-refactor-poca\\SoccerTwos\\SoccerTwos-6499312.pt"
+                ]
+            },
+            {
+                "steps": 6999978,
+                "file_path": "results\\test-refactor-poca\\SoccerTwos\\SoccerTwos-6999978.onnx",
+                "reward": 0.05125000521074981,
+                "creation_time": 1736924327.214208,
+                "auxillary_file_paths": [
+                    "results\\test-refactor-poca\\SoccerTwos\\SoccerTwos-6999978.pt"
+                ]
+            },
+            {
+                "steps": 7499900,
+                "file_path": "results\\test-refactor-poca\\SoccerTwos\\SoccerTwos-7499900.onnx",
+                "reward": 0.02334666574994723,
+                "creation_time": 1736927934.7912881,
+                "auxillary_file_paths": [
+                    "results\\test-refactor-poca\\SoccerTwos\\SoccerTwos-7499900.pt"
+                ]
+            },
+            {
+                "steps": 7500900,
+                "file_path": "results\\test-refactor-poca\\SoccerTwos\\SoccerTwos-7500900.onnx",
+                "reward": 0.08437500451691449,
+                "creation_time": 1736927935.344352,
+                "auxillary_file_paths": [
+                    "results\\test-refactor-poca\\SoccerTwos\\SoccerTwos-7500900.pt"
+                ]
+            }
+        ],
+        "elo": 1162.9500068621658,
+        "final_checkpoint": {
+            "steps": 7500900,
+            "file_path": "results\\test-refactor-poca\\SoccerTwos.onnx",
+            "reward": 0.08437500451691449,
+            "creation_time": 1736927935.344352,
+            "auxillary_file_paths": [
+                "results\\test-refactor-poca\\SoccerTwos\\SoccerTwos-7500900.pt"
+            ]
+        }
+    },
+    "metadata": {
+        "stats_format_version": "0.3.0",
+        "mlagents_version": "0.28.0",
+        "torch_version": "1.10.0+cpu"
+    }
+}

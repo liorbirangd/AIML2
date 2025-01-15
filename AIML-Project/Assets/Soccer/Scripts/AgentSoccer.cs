@@ -105,10 +105,10 @@ public class AgentSoccer : Agent, IRewardableAgent
     {
         rewardComponents = new List<RewardComponent>();
         rewardComponents.Add(new ExistantialRewardComponent(rewardManager, this, envController));
-        rewardComponents.Add(new BallPositionRewardComponent(rewardManager, this, envController));
+        // rewardComponents.Add(new BallPositionRewardComponent(rewardManager, this, envController));
         rewardComponents.Add(new BallTouchRewardComponent(rewardManager, this));
-        rewardComponents.Add(new BlockingBallRewardComponent(rewardManager, this, team));
-        rewardComponents.Add(new BallKickDirectionRewardComponent(rewardManager, this, team));
+        // rewardComponents.Add(new BlockingBallRewardComponent(rewardManager, this, team));
+        // rewardComponents.Add(new BallKickDirectionRewardComponent(rewardManager, this, team));
     }
 
     public override void OnActionReceived(ActionBuffers actionBuffers)
