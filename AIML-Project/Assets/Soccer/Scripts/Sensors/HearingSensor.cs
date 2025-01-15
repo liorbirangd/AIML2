@@ -17,7 +17,7 @@ public class HearingSensor : MonoBehaviour
 
     public void OnDestroy()
     {
-        if (awarenessSystem.hearingManager != null) 
+        if (awarenessSystem != null && awarenessSystem.hearingManager != null) 
             awarenessSystem.hearingManager.Deregister(this);
     }
 

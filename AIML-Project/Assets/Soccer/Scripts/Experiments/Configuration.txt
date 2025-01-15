@@ -1,0 +1,13 @@
+useConfig=false
+hearingSensor=null
+awarenessSystem=null
+blueStriker1HearingSensor=off
+blueStriker1AwarenessSystem=off
+blueStriker2HearingSensor=off
+blueStriker2AwarenessSystem=off
+purpleStriker1HearingSensor=off
+purpleStriker1AwarenessSystem=off
+purpleStriker2HearingSensor=off
+purpleStriker2AwarenessSystem=off
+runExperiment=false
+numberOfGames=5
