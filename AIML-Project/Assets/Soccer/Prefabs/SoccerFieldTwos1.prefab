@@ -2285,7 +2285,6 @@ MonoBehaviour:
   agentRb: {fileID: 0}
   initialPos: {x: 0, y: 0, z: 0}
   rotSign: 0
-  ball: {fileID: 1682753582128710}
 --- !u!114 &9152743230243588598
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2553,7 +2552,6 @@ MonoBehaviour:
   agentRb: {fileID: 0}
   initialPos: {x: 0, y: 0, z: 0}
   rotSign: 0
-  ball: {fileID: 1682753582128710}
 --- !u!114 &404683423509059512
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3076,7 +3074,6 @@ MonoBehaviour:
   purpleGoalTag: purpleGoal
   blueGoalTag: blueGoal
   lastToucher: {fileID: 0}
-  assistAgent: {fileID: 0}
   previousBallWasMoving: 0
 --- !u!54 &54100138833592438
 Rigidbody:
@@ -4390,7 +4387,6 @@ MonoBehaviour:
   agentRb: {fileID: 0}
   initialPos: {x: 0, y: 0, z: 0}
   rotSign: 0
-  ball: {fileID: 1682753582128710}
 --- !u!114 &8734522883866558980
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4956,7 +4952,6 @@ MonoBehaviour:
   agentRb: {fileID: 0}
   initialPos: {x: 0, y: 0, z: 0}
   rotSign: 0
-  ball: {fileID: 1682753582128710}
 --- !u!114 &1018414316889932458
 MonoBehaviour:
   m_ObjectHideFlags: 0

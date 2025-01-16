@@ -59,7 +59,7 @@ public class AgentSoccer : Agent, IRewardableAgent
         envController = GetComponentInParent<SoccerEnvController>();
         rewardManager = new RewardManager();
         if (envController == null) throw new Exception("SoccerEnvController not found");
-        
+
 
         m_BehaviorParameters = gameObject.GetComponent<BehaviorParameters>();
         if (m_BehaviorParameters.TeamId == (int)Team.Blue)
@@ -124,6 +124,7 @@ public class AgentSoccer : Agent, IRewardableAgent
                 positionalRewardStepCounter = 0; // Reset counter
             }
         }
+
         MoveAgent(actionBuffers.DiscreteActions);
     }
 
@@ -197,8 +198,9 @@ public class AgentSoccer : Agent, IRewardableAgent
             StartCoroutine(DelayedRewardCheck(preContactVelocity, ballRb, c.gameObject));
 
             // Emit sound event
-            awarenessSystem.hearingManager.OnSoundEmitted(gameObject, transform.position, EHeardSoundCategory.EKick,
-                3f);
+            if (awarenessSystem != null)
+                awarenessSystem.hearingManager.OnSoundEmitted(gameObject, transform.position, EHeardSoundCategory.EKick,
+                    3f);
         }
     }
 
@@ -268,7 +270,7 @@ public class AgentSoccer : Agent, IRewardableAgent
 
     private void MovmentSound()
     {
-        if (!awarenessSystem)
+        if (awarenessSystem==null)
             return;
         //Limited how often a 'sound' is made because it caused framerate drops when there are multiple fields
         soundTimer++;
