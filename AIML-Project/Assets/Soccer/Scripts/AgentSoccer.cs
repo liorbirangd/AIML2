@@ -105,7 +105,7 @@ public class AgentSoccer : Agent, IRewardableAgent
     private void InitializeSensors()
     {
         awarenessSystem = GetComponentInChildren<AwarenessSystem>();
-        HearingSensor hearingSensor = GetComponentInChildren<HearingSensor>();
+        HearingSensorController hearingSensor = GetComponentInChildren<HearingSensorController>();
         int observations = 0;
         if(awarenessSystem != null) observations+=25;
         if(hearingSensor != null) observations+=12;
