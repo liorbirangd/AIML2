@@ -2246,7 +2246,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_BrainParameters:
-    VectorObservationSize: 123
+    VectorObservationSize: 37
     NumStackedVectorObservations: 1
     m_ActionSpec:
       m_NumContinuousActions: 0
@@ -2255,7 +2255,7 @@ MonoBehaviour:
     VectorActionDescriptions: []
     VectorActionSpaceType: 0
     hasUpgradedBrainParametersWithActionSpec: 1
-  m_Model: {fileID: 5022602860645237092, guid: 8cd4584c2f2cb4c5fb51675d364e10ec, type: 3}
+  m_Model: {fileID: 0}
   m_InferenceDevice: 2
   m_BehaviorType: 0
   m_BehaviorName: SoccerTwos
@@ -2513,7 +2513,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_BrainParameters:
-    VectorObservationSize: 123
+    VectorObservationSize: 37
     NumStackedVectorObservations: 1
     m_ActionSpec:
       m_NumContinuousActions: 0
@@ -2522,7 +2522,7 @@ MonoBehaviour:
     VectorActionDescriptions: []
     VectorActionSpaceType: 0
     hasUpgradedBrainParametersWithActionSpec: 1
-  m_Model: {fileID: 5022602860645237092, guid: 8cd4584c2f2cb4c5fb51675d364e10ec, type: 3}
+  m_Model: {fileID: 0}
   m_InferenceDevice: 2
   m_BehaviorType: 0
   m_BehaviorName: SoccerTwos
@@ -4348,7 +4348,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_BrainParameters:
-    VectorObservationSize: 123
+    VectorObservationSize: 37
     NumStackedVectorObservations: 1
     m_ActionSpec:
       m_NumContinuousActions: 0
@@ -4357,7 +4357,7 @@ MonoBehaviour:
     VectorActionDescriptions: []
     VectorActionSpaceType: 0
     hasUpgradedBrainParametersWithActionSpec: 1
-  m_Model: {fileID: 5022602860645237092, guid: 8cd4584c2f2cb4c5fb51675d364e10ec, type: 3}
+  m_Model: {fileID: 0}
   m_InferenceDevice: 2
   m_BehaviorType: 0
   m_BehaviorName: SoccerTwos
@@ -4913,7 +4913,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_BrainParameters:
-    VectorObservationSize: 123
+    VectorObservationSize: 37
     NumStackedVectorObservations: 1
     m_ActionSpec:
       m_NumContinuousActions: 0
@@ -4922,7 +4922,7 @@ MonoBehaviour:
     VectorActionDescriptions: []
     VectorActionSpaceType: 0
     hasUpgradedBrainParametersWithActionSpec: 1
-  m_Model: {fileID: 5022602860645237092, guid: 8cd4584c2f2cb4c5fb51675d364e10ec, type: 3}
+  m_Model: {fileID: 0}
   m_InferenceDevice: 2
   m_BehaviorType: 0
   m_BehaviorName: SoccerTwos
@@ -5298,6 +5298,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1831789531847717416, guid: f2ecc5443237b304d91c0b719ad34c21,
         type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1831789531847717416, guid: f2ecc5443237b304d91c0b719ad34c21,
+        type: 3}
       propertyPath: m_TagString
       value: blueAgent
       objectReference: {fileID: 0}
@@ -5463,6 +5468,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Awarness_sensor
+      objectReference: {fileID: 0}
+    - target: {fileID: 1831789531847717416, guid: f2ecc5443237b304d91c0b719ad34c21,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1831789531847717416, guid: f2ecc5443237b304d91c0b719ad34c21,
         type: 3}
@@ -5858,6 +5868,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Awarness_sensor
+      objectReference: {fileID: 0}
+    - target: {fileID: 1831789531847717416, guid: f2ecc5443237b304d91c0b719ad34c21,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1831789531847717416, guid: f2ecc5443237b304d91c0b719ad34c21,
         type: 3}
@@ -6322,6 +6337,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Awarness_sensor
+      objectReference: {fileID: 0}
+    - target: {fileID: 1831789531847717416, guid: f2ecc5443237b304d91c0b719ad34c21,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1881710761204778299, guid: f2ecc5443237b304d91c0b719ad34c21,
         type: 3}

@@ -53,7 +53,7 @@ public class AgentSoccer : Agent, IRewardableAgent
 
     private int positionalRewardStepCounter = 0; // Step counter for positional rewards
     private const int positionalRewardStepInterval = 100; // Execute every 100 steps
-
+    
     public override void Initialize()
     {
         envController = GetComponentInParent<SoccerEnvController>();
@@ -61,7 +61,7 @@ public class AgentSoccer : Agent, IRewardableAgent
         if (envController == null) throw new Exception("SoccerEnvController not found");
 
 
-        m_BehaviorParameters = gameObject.GetComponent<BehaviorParameters>();
+        m_BehaviorParameters = GetComponent<BehaviorParameters>();
         if (m_BehaviorParameters.TeamId == (int)Team.Blue)
         {
             team = Team.Blue;
@@ -97,8 +97,19 @@ public class AgentSoccer : Agent, IRewardableAgent
         hearingSensor = GetComponentInChildren<HearingSensorController>();
 
         m_ResetParams = Academy.Instance.EnvironmentParameters;
-        awarenessSystem = GetComponentInChildren<AwarenessSystem>();
+        InitializeSensors();
+
         InitializeRewardComponents();
+    }
+
+    private void InitializeSensors()
+    {
+        awarenessSystem = GetComponentInChildren<AwarenessSystem>();
+        HearingSensor hearingSensor = GetComponentInChildren<HearingSensor>();
+        int observations = 0;
+        if(awarenessSystem != null) observations+=25;
+        if(hearingSensor != null) observations+=12;
+        m_BehaviorParameters.BrainParameters.VectorObservationSize=observations;
     }
 
     private void InitializeRewardComponents()
