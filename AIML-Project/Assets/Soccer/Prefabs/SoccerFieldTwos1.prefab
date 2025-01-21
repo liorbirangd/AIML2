@@ -5518,6 +5518,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Hearing_Sensor
       objectReference: {fileID: 0}
+    - target: {fileID: 4821656446974766886, guid: 76b114a3176bb834c96e5311cbd5aacf,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5816553209542207618, guid: 76b114a3176bb834c96e5311cbd5aacf,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -5595,7 +5600,7 @@ PrefabInstance:
     - target: {fileID: 4821656446974766886, guid: 76b114a3176bb834c96e5311cbd5aacf,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5816553209542207618, guid: 76b114a3176bb834c96e5311cbd5aacf,
         type: 3}
@@ -5670,6 +5675,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Hearing_Sensor
+      objectReference: {fileID: 0}
+    - target: {fileID: 4821656446974766886, guid: 76b114a3176bb834c96e5311cbd5aacf,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5816553209542207618, guid: 76b114a3176bb834c96e5311cbd5aacf,
         type: 3}
@@ -6381,6 +6391,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Hearing_Sensor
+      objectReference: {fileID: 0}
+    - target: {fileID: 4821656446974766886, guid: 76b114a3176bb834c96e5311cbd5aacf,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4821656446974766886, guid: 76b114a3176bb834c96e5311cbd5aacf,
         type: 3}
