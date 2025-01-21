@@ -94,7 +94,7 @@ public class AgentSoccer : Agent, IRewardableAgent
         m_SoccerSettings = FindObjectOfType<SoccerSettings>();
         agentRb = GetComponent<Rigidbody>();
         agentRb.maxAngularVelocity = 500;
-        hearingSensor = GetComponentInChildren<HearingSensorController>();
+        
 
         m_ResetParams = Academy.Instance.EnvironmentParameters;
         InitializeSensors();
@@ -105,7 +105,7 @@ public class AgentSoccer : Agent, IRewardableAgent
     private void InitializeSensors()
     {
         awarenessSystem = GetComponentInChildren<AwarenessSystem>();
-        HearingSensorController hearingSensor = GetComponentInChildren<HearingSensorController>();
+        hearingSensor = GetComponentInChildren<HearingSensorController>();
         int observations = 0;
         if(awarenessSystem != null) observations+=25;
         if(hearingSensor != null) observations+=12;
