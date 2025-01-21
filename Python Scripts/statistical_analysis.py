@@ -161,11 +161,11 @@ def plot_summary_metrics(window_metrics, metric_column_label, window_size):
     plt.show()
 
 def main():
-    file_path = "time_horizon_elo.csv"
-    metric_column_label = "ELO"
+    file_path = "learning_rate_entropy.csv"
+    metric_column_label = "Learning Rate Entropy"
     step_column = "Step"
     window_size = 500000
-    minimize_metric = False
+    minimize_metric = True
 
     data = load_and_prepare_data(file_path)
 
