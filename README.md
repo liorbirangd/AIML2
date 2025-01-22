@@ -31,7 +31,7 @@ Each agent in this project is equipped with several scripts that enable training
 ## Sensors
 Agents gather data from the environment using sensors, which are crucial for navigating and interacting within the game space:
 ### Exsisting Sensors
-- **___RayPerceptionSensor**: Positioned on the agent, this component emits 11 forward-pointing rays to detect objects like walls, the ball, and other agents. This sensor uses the `Raycast'PerceptionRotatingSnesor` which inherits from `RayPerceptionSensorComponent3D`, it performs the observation collection automatically and does not use the `CollectObservetions` method.
+- **___RayPerceptionSensor**: Positioned on the agent, this component emits 11 forward-pointing rays to detect objects like walls, the ball, and other agents. This sensor uses the `RaycastPerceptionRotatingSnesor` which inherits from `RayPerceptionSensorComponent3D`, it performs the observation collection automatically and does not use the `CollectObservetions` method.
 - **___RayPerceptionSensorReverse**: This sensor sends out 3 backward-pointing rays, enhancing the agent's awareness of its surroundings by detecting objects from behind. This sensor uses `RayPerceptionSensorComponent3D`, and as it is an unrealistic it has been disabled.
 - **___HearingSensor**: This sensor employs a sphere hitbox around the agent that detects other objects that move. based on their position and distance, the agent learns an area in which the object is located. This sensor emulates hearing, and uses the `HearingSensorController` script.
 - **___AwarnessSensor**: This sensor is composed of 3 subcomponents, a sound sensor, a sight sensor, and a proximity sensor, When an object is detected by one of those subsensors, the agent increases its awarness score associated with the object, and one the awarness is above a threshold it updates the last known position where the detected object was.
@@ -42,6 +42,8 @@ Agents gather data from the environment using sensors, which are crucial for nav
 - In the `AgentSoccer` class, under the `CollectObservations(VectorSensor sensor)` method, call the `AddObservations(VectorSensor sensor)` of the new sensor if it exsits.
 ### Enabling/Disabling Sensors
 In order to enable or disable a sensor, go to the field prefab in unity, under each of the 4 agents, select the sensor and enable/disable its object.
+
+![Enable Sensor](enable_sensor.png "Enable Sensor Example")
 
 ## Rewards
 Agents must receive rewards for encouraged actions to facilitate effective training. To facilitae a modular reward system, we introduced the `RewardManager` class. each agent creates a `RewardManager` object, and uses it as the subject in an Observer pattern. The manager object contains multiple UnityEvents that areenvoked when different triggers happen to the agent, such as colliding with the ball. For each reward component, we created a seperate class that controls the checks and calculations regarding that reward, and they are acting as listeners to the relevant events in the RewardManager. In ordere to add new rewards, or turn off existing rewards, they need to be initialized in the `InitializeRewardComponents()` of the `AgentSoccer`. having componnents missing is not a problem as the events would still trigger but without listeners.
