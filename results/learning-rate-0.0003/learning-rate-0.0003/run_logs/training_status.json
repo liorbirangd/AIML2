@@ -1,0 +1,57 @@
+{
+    "SoccerTwos": {
+        "checkpoints": [
+            {
+                "steps": 2999390,
+                "file_path": "results\\learning-rate-0.0003\\SoccerTwos\\SoccerTwos-2999390.onnx",
+                "reward": 0.12885946075658541,
+                "creation_time": 1736993501.3062015,
+                "auxillary_file_paths": [
+                    "results\\learning-rate-0.0003\\SoccerTwos\\SoccerTwos-2999390.pt"
+                ]
+            },
+            {
+                "steps": 3499720,
+                "file_path": "results\\learning-rate-0.0003\\SoccerTwos\\SoccerTwos-3499720.onnx",
+                "reward": 0.03333333941797415,
+                "creation_time": 1736995956.955269,
+                "auxillary_file_paths": [
+                    "results\\learning-rate-0.0003\\SoccerTwos\\SoccerTwos-3499720.pt"
+                ]
+            },
+            {
+                "steps": 3999764,
+                "file_path": "results\\learning-rate-0.0003\\SoccerTwos\\SoccerTwos-3999764.onnx",
+                "reward": 0.04375000356230885,
+                "creation_time": 1736998365.066489,
+                "auxillary_file_paths": [
+                    "results\\learning-rate-0.0003\\SoccerTwos\\SoccerTwos-3999764.pt"
+                ]
+            },
+            {
+                "steps": 4499240,
+                "file_path": "results\\learning-rate-0.0003\\SoccerTwos\\SoccerTwos-4499240.onnx",
+                "reward": 0.07142856929983411,
+                "creation_time": 1737000840.9428842,
+                "auxillary_file_paths": [
+                    "results\\learning-rate-0.0003\\SoccerTwos\\SoccerTwos-4499240.pt"
+                ]
+            },
+            {
+                "steps": 4999468,
+                "file_path": "results\\learning-rate-0.0003\\SoccerTwos\\SoccerTwos-4999468.onnx",
+                "reward": 0.07749999829102308,
+                "creation_time": 1737003257.957782,
+                "auxillary_file_paths": [
+                    "results\\learning-rate-0.0003\\SoccerTwos\\SoccerTwos-4999468.pt"
+                ]
+            }
+        ],
+        "elo": 1225.9146043439528
+    },
+    "metadata": {
+        "stats_format_version": "0.3.0",
+        "mlagents_version": "0.28.0",
+        "torch_version": "1.10.0+cpu"
+    }
+}
